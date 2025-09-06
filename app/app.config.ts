@@ -172,5 +172,10 @@ export default defineAppConfig({
 				container: "h-8",
 			},
 		},
+		toast: {
+			slots: {
+				root: "max-md:hidden",
+			},
+		},
 	},
 });
