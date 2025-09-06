@@ -1,5 +1,6 @@
 <template>
 	<UApp>
+		<UBanner title="🎉 Hi~ 欢迎来到橙子工艺官网, 如果你在网站中发现任何问题请联系 AliceIClodia." close />
 		<appHeader />
 		<NuxtLoadingIndicator color="#F8BB77" />
 		<UMain>

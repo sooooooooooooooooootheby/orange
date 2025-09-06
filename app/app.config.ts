@@ -167,5 +167,10 @@ export default defineAppConfig({
 				},
 			},
 		},
+		banner: {
+			slots: {
+				container: "h-8",
+			},
+		},
 	},
 });
