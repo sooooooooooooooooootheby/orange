@@ -17,4 +17,10 @@ export default defineNuxtConfig({
 			link: [{ rel: "icon", type: "image/x-icon", href: "/orange.webp" }],
 		},
 	},
+
+	content: {
+		preview: {
+			api: "https://api.nuxt.studio",
+		},
+	},
 });
