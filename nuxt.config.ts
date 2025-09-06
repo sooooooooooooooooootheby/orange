@@ -23,4 +23,12 @@ export default defineNuxtConfig({
 			api: "https://api.nuxt.studio",
 		},
 	},
+
+	runtimeConfig: {
+		databaseHost: process.env.DB_HOST,
+		databaseUser: process.env.DB_USER,
+		databasePassword: process.env.DB_PASSWORD,
+		databaseDatabase: process.env.DB_NAME,
+		databaseCharset: process.env.DB_CHARSET,
+	},
 });

@@ -74,7 +74,7 @@ const sorting = computed(() => {
 });
 
 const { data } = await useAsyncData("mountains", async () => {
-	const res = (await $fetch("https://api.s22y.moe/lodestar/api/guild")) as res;
+	const res = (await $fetch("/api/guild")) as res;
 	const ranking: ranking[] = res.data.map((item) => {
 		return {
 			...item,
