@@ -8,7 +8,7 @@
 			<div v-for="(item, index) in sorting">
 				<div class="bg-default border-default flex flex-col gap-1 rounded-lg border-1 px-3 py-2">
 					<div class="flex items-center gap-2">
-						<img :src="`https://mc-heads.net/head/${item.creator}`" alt="item.creator" class="mb-0! w-10!" />
+						<img :src="handleHead(item.creator)" alt="item.creator" class="mb-0! w-10!" />
 						<div class="flex flex-col justify-center">
 							<span v-html="toColoredHtml(item.guild_name)"></span>
 							<span class="text-sm text-gray-600"> 会长: {{ item.creator }} </span>
