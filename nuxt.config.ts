@@ -14,7 +14,13 @@ export default defineNuxtConfig({
 			htmlAttrs: {
 				lang: "zh_CN",
 			},
-			link: [{ rel: "icon", type: "image/x-icon", href: "/orange.webp" }],
+			link: [
+				{ rel: "icon", type: "image/x-icon", href: "/orange.webp" },
+				{
+					rel: "stylesheet",
+					href: "https://chinese-fonts-cdn.deno.dev/packages/hcqyt/dist/ChillRoundFRegular/result.css",
+				},
+			],
 		},
 	},
 

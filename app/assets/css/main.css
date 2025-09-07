@@ -2,11 +2,6 @@
 @import "@nuxt/ui";
 @plugin "tailwindcss-pattern";
 
-@font-face {
-    font-family: AlimamaFangYuanTiVF;
-    src: url("https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/typeface/AlimamaFangYuanTiVF.ttf");
-}
-
 * {
-    font-family: AlimamaFangYuanTiVF;
+	font-family: "寒蝉全圆体";
 }
