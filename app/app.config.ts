@@ -4,6 +4,10 @@ export default defineAppConfig({
 			label: "服务器指北",
 			to: "/docs",
 		},
+		{
+			label: "封神榜",
+			to: "/bans",
+		},
 	],
 	navigation: [
 		{
@@ -126,6 +130,7 @@ export default defineAppConfig({
 	},
 	ui: {
 		mdc: true,
+		fonts: false,
 		colors: {
 			primary: "amber",
 			neutral: "slate",

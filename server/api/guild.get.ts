@@ -1,4 +1,4 @@
-import db from "../db.js";
+import db from "../database/db";
 
 interface GuildInfo {
 	guild_name: string;
