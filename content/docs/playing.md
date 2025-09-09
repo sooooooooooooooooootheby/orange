@@ -124,3 +124,43 @@ hud 会默认显示在左上角.
 下面是魔法方块可用的方块.
 
 ![魔法方块](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/playing/mb.webp)
+
+### 地图画
+
+想在服务器展示你的meme? 表情包? 还是好看的插画?
+
+现在我们有地图画! 你可以在服务器里展示一些图片了.
+
+首先你需要一个 `url`! 然后执行命令 `/tomap <url>`.
+
+等待一会你的手上就会出现一个地图画, 找一个物品展示框, 然后放上去就可以了.
+
+![am1](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/playing/am1.webp)
+
+#### 图床
+
+很简单对吧! 那么就有观众问了.
+
+"a 主播主播, url是什么, 我只有图片怎么弄到服务器里面?"
+
+那么关键的就来了.
+
+你需要一个图床, 你可以使用以下图床, 或者任意的图床, 只要可以把你的图片变成一个url.
+
+- [hello图床](https://www.helloimg.com/login)
+- [聚合图床](https://www.superbed.cn/)
+- [路过图床](https://imgse.com/)
+
+把你的图片上传到图床, 拿到url后进入游戏输入指令即可.
+
+#### 尺寸说明
+
+服务器对地图画的尺寸限制为 `1280px X 640px`, 也就是游戏里的 `10 X 5`.
+
+图片的分辨率最好是128的倍数, 否则会出现透明白边.
+
+::tip
+因为在游戏里, 一格就是`128px X 128px`, 所以如果你图片的分辨率不是128的倍数, 会导致边缘填不满一格, 出现透明白边, 影响观感
+
+![am2](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/playing/am2.webp)
+::
