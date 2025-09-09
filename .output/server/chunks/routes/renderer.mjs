@@ -1,5 +1,5 @@
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'vue-bundle-renderer/runtime';
-import { b as buildAssetsURL, u as useRuntimeConfig, g as getResponseStatusText, a as getResponseStatus, d as defineRenderHandler, p as publicAssetsURL, c as getQuery, e as createError, f as destr, h as getRouteRules, i as useNitroApp } from '../nitro/nitro.mjs';
+import { f as buildAssetsURL, u as useRuntimeConfig, g as getResponseStatusText, h as getResponseStatus, i as defineRenderHandler, p as publicAssetsURL, j as getQuery, e as createError, d as destr, k as getRouteRules, b as useNitroApp } from '../_/nitro.mjs';
 import { renderToString } from 'vue/server-renderer';
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'unhead/server';
 import { stringify, uneval } from 'devalue';
@@ -82,7 +82,7 @@ function createHead(options = {}) {
   return head;
 }
 
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[{"rel":"icon","type":"image/x-icon","href":"/orange.webp"}],"style":[],"script":[],"noscript":[],"title":"Orange Craft MC","htmlAttrs":{"lang":"zh_CN"}};
+const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[{"rel":"icon","type":"image/x-icon","href":"/orange.webp"},{"rel":"stylesheet","href":"https://chinese-fonts-cdn.deno.dev/packages/hcqyt/dist/ChillRoundFRegular/result.css"}],"style":[],"script":[],"noscript":[],"title":"Orange Craft MC","htmlAttrs":{"lang":"zh_CN"}};
 
 const appRootTag = "div";
 
@@ -262,7 +262,7 @@ async function renderInlineStyles(usedModules) {
 
 const renderSSRHeadOptions = {"omitLineBreaks":true};
 
-const entryFileName = "Cgkraxui.js";
+const entryFileName = "CPj6yJGy.js";
 
 globalThis.__buildAssetsURL = buildAssetsURL;
 globalThis.__publicAssetsURL = publicAssetsURL;

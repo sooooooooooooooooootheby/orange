@@ -1,14 +1,13 @@
-import { defineComponent, inject, computed, toValue, unref, mergeProps, withCtx, renderSlot, mergeModels, useModel, createVNode, createBlock, createCommentVNode, openBlock, createTextVNode, toDisplayString, useSlots, toRef, toHandlers, shallowRef, h, resolveComponent, resolveDynamicComponent, hasInjectionContext, getCurrentInstance, onServerPrefetch, provide, cloneVNode, createElementBlock, createSlots, renderList, Fragment, ref, watch, reactive, isRef, nextTick, defineAsyncComponent, useSSRContext, shallowReactive, Suspense, createApp, useId, withModifiers, onErrorCaptured, effectScope, isReadonly, isShallow, isReactive, toRaw, getCurrentScope, markRaw } from 'vue';
-import { s as serialize, j as parseQuery, k as klona, l as defuFn, e as createError$1, m as defu, n as hasProtocol, o as joinURL, q as getContext, r as isEqual, w as withQuery, t as withTrailingSlash, v as withoutTrailingSlash, x as isScriptProtocol, y as sanitizeStatusCode, $ as $fetch$1, z as baseURL, p as publicAssetsURL, A as createHooks, B as executeAsync, C as toRouteMatcher, D as createRouter$1 } from '../nitro/nitro.mjs';
+import { defineComponent, shallowRef, getCurrentInstance, provide, cloneVNode, h, createElementBlock, useSlots, toRef, computed, unref, withCtx, mergeProps, createSlots, renderList, renderSlot, createVNode, createBlock, createCommentVNode, openBlock, Fragment, createTextVNode, toDisplayString, toHandlers, resolveComponent, toValue, onServerPrefetch, inject, resolveDynamicComponent, ref, watch, mergeModels, useModel, hasInjectionContext, reactive, isRef, nextTick, defineAsyncComponent, useSSRContext, shallowReactive, Suspense, createApp, useId, withModifiers, onErrorCaptured, effectScope, isReadonly, isShallow, isReactive, toRaw, getCurrentScope, markRaw } from 'vue';
+import { l as serialize, e as createError$1, m as defu, n as hasProtocol, o as isScriptProtocol, q as joinURL, r as parseQuery, v as klona, w as defuFn, x as isEqual, y as withQuery, z as sanitizeStatusCode, A as getContext, B as withTrailingSlash, C as withoutTrailingSlash, $ as $fetch$1, D as baseURL, p as publicAssetsURL, E as createHooks, F as executeAsync, G as toRouteMatcher, H as createRouter$1 } from '../_/nitro.mjs';
 import { useRoute as useRoute$1, RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import { Icon, getIcon, loadIcon as loadIcon$1, _api, addAPIProvider, setCustomIconsLoader } from '@iconify/vue';
 import colors from 'tailwindcss/colors';
-import { ssrRenderComponent, ssrRenderSlot, ssrRenderClass, ssrInterpolate, ssrRenderVNode, ssrRenderList, ssrRenderAttrs, ssrRenderAttr, ssrRenderSuspense, ssrRenderStyle } from 'vue/server-renderer';
-import { Primitive, Slot, useForwardPropsEmits, DialogRoot, DialogTrigger, DialogPortal, DialogOverlay, DialogContent, VisuallyHidden, DialogTitle, DialogDescription, DialogClose, useForwardProps, AccordionRoot, AccordionItem, AccordionTrigger, AccordionContent, TooltipRoot, TooltipTrigger, TooltipPortal, TooltipContent, TooltipArrow, ToastProvider, ToastPortal, ToastViewport, ConfigProvider, TooltipProvider, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuLink, NavigationMenuContent, NavigationMenuRoot, NavigationMenuList, NavigationMenuIndicator, NavigationMenuViewport, ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, Separator, ProgressRoot, ProgressIndicator } from 'reka-ui';
-import { createSharedComposable, reactivePick, createReusableTemplate, reactiveOmit, useDebounceFn } from '@vueuse/core';
+import { ssrRenderComponent, ssrRenderSlot, ssrRenderClass, ssrRenderList, ssrInterpolate, ssrRenderVNode, ssrRenderAttrs, ssrRenderAttr, ssrRenderSuspense, ssrRenderStyle } from 'vue/server-renderer';
+import { useForwardProps, useForwardPropsEmits, Primitive, AccordionRoot, AccordionItem, AccordionTrigger, AccordionContent, DialogRoot, DialogTrigger, DialogPortal, DialogOverlay, DialogContent, VisuallyHidden, DialogTitle, DialogDescription, DialogClose, Separator, Slot, TooltipRoot, TooltipTrigger, TooltipPortal, TooltipContent, TooltipArrow, ToastProvider, ToastPortal, ToastViewport, ConfigProvider, TooltipProvider, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuLink, NavigationMenuContent, NavigationMenuRoot, NavigationMenuList, NavigationMenuIndicator, NavigationMenuViewport, ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, ProgressRoot, ProgressIndicator } from 'reka-ui';
+import { createSharedComposable, createReusableTemplate, reactivePick, reactiveOmit, useDebounceFn } from '@vueuse/core';
 import { createTV } from 'tailwind-variants';
 import { getIconCSS } from '@iconify/utils/lib/css/icon';
-import { debounce } from 'perfect-debounce';
 import { DrawerRootNested, DrawerRoot, DrawerTrigger, DrawerPortal, DrawerOverlay, DrawerContent, DrawerHandle, DrawerTitle, DrawerDescription } from 'vaul-vue';
 import { HoverCard, Popover } from 'reka-ui/namespaced';
 import { u as useSeoMeta$1, a as useHead$1, h as headSymbol } from '../routes/renderer.mjs';
@@ -17,11 +16,11 @@ import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
-import 'node:crypto';
 import 'node:url';
 import '@iconify/utils';
+import 'node:crypto';
 import 'consola';
+import 'node:path';
 import 'better-sqlite3';
 import 'vue-bundle-renderer/runtime';
 import 'unhead/server';
@@ -115,6 +114,93 @@ class DiffHashedObject {
     }
     return `${k}(${this.value})`;
   }
+}
+
+//#region src/index.ts
+const DEBOUNCE_DEFAULTS = { trailing: true };
+/**
+Debounce functions
+@param fn - Promise-returning/async function to debounce.
+@param wait - Milliseconds to wait before calling `fn`. Default value is 25ms
+@returns A function that delays calling `fn` until after `wait` milliseconds have elapsed since the last time it was called.
+@example
+```
+import { debounce } from 'perfect-debounce';
+const expensiveCall = async input => input;
+const debouncedFn = debounce(expensiveCall, 200);
+for (const number of [1, 2, 3]) {
+console.log(await debouncedFn(number));
+}
+//=> 1
+//=> 2
+//=> 3
+```
+*/
+function debounce(fn, wait = 25, options = {}) {
+	options = {
+		...DEBOUNCE_DEFAULTS,
+		...options
+	};
+	if (!Number.isFinite(wait)) throw new TypeError("Expected `wait` to be a finite number");
+	let leadingValue;
+	let timeout;
+	let resolveList = [];
+	let currentPromise;
+	let trailingArgs;
+	const applyFn = (_this, args) => {
+		currentPromise = _applyPromised(fn, _this, args);
+		currentPromise.finally(() => {
+			currentPromise = null;
+			if (options.trailing && trailingArgs && !timeout) {
+				const promise = applyFn(_this, trailingArgs);
+				trailingArgs = null;
+				return promise;
+			}
+		});
+		return currentPromise;
+	};
+	const debounced = function(...args) {
+		if (options.trailing) trailingArgs = args;
+		if (currentPromise) return currentPromise;
+		return new Promise((resolve) => {
+			const shouldCallNow = !timeout && options.leading;
+			clearTimeout(timeout);
+			timeout = setTimeout(() => {
+				timeout = null;
+				const promise = options.leading ? leadingValue : applyFn(this, args);
+				trailingArgs = null;
+				for (const _resolve of resolveList) _resolve(promise);
+				resolveList = [];
+			}, wait);
+			if (shouldCallNow) {
+				leadingValue = applyFn(this, args);
+				resolve(leadingValue);
+			} else resolveList.push(resolve);
+		});
+	};
+	const _clearTimeout = (timer) => {
+		if (timer) {
+			clearTimeout(timer);
+			timeout = null;
+		}
+	};
+	debounced.isPending = () => !!timeout;
+	debounced.cancel = () => {
+		_clearTimeout(timeout);
+		resolveList = [];
+		trailingArgs = null;
+	};
+	debounced.flush = () => {
+		_clearTimeout(timeout);
+		if (!trailingArgs || currentPromise) return;
+		const args = trailingArgs;
+		trailingArgs = null;
+		return applyFn(this, args);
+	};
+	return debounced;
+}
+async function _applyPromised(fn, _this, args) {
+	return await fn.apply(_this, args);
 }
 
 if (!globalThis.$fetch) {
@@ -465,7 +551,7 @@ const createError = (error) => {
   });
   return nuxtError;
 };
-const unhead_daW5jK6lKzXubJyLLxivSxxZ8skNtoWgFzYlCVJnrsY = /* @__PURE__ */ defineNuxtPlugin({
+const unhead_5VpTzxiG3rGTc_R3p7E55c6VYZ9eejBkr7KI3BaDtZw = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:head",
   enforce: "pre",
   setup(nuxtApp) {
@@ -486,16 +572,52 @@ async function getRouteRules(arg) {
     return defu({}, ..._routeRulesMatcher2.matchAll(path).reverse());
   }
 }
+const __nuxt_page_meta$3 = {
+  layout: "bans"
+};
+const __nuxt_page_meta$2 = {
+  layout: "bans"
+};
+const __nuxt_page_meta$1 = {
+  layout: "bans"
+};
+const __nuxt_page_meta = {
+  layout: "bans"
+};
 const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-BJRbNIGN.mjs')
+    component: () => import('./index-BSGEQk_E.mjs')
+  },
+  {
+    name: "bans",
+    path: "/bans",
+    meta: __nuxt_page_meta$3 || {},
+    component: () => import('./index-BWq18WCi.mjs')
+  },
+  {
+    name: "bans-kicks",
+    path: "/bans/kicks",
+    meta: __nuxt_page_meta$2 || {},
+    component: () => import('./kicks-DMEMcsMD.mjs')
+  },
+  {
+    name: "bans-mutes",
+    path: "/bans/mutes",
+    meta: __nuxt_page_meta$1 || {},
+    component: () => import('./mutes-Dz5kYOZX.mjs')
+  },
+  {
+    name: "bans-warnings",
+    path: "/bans/warnings",
+    meta: __nuxt_page_meta || {},
+    component: () => import('./warnings-CHaShjwD.mjs')
   },
   {
     name: "docs-slug",
     path: "/docs/:slug(.*)*",
-    component: () => import('./_...slug_-DsnnGmIR.mjs')
+    component: () => import('./_...slug_-CGJ6Tegh.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -846,7 +968,7 @@ const reducers = [
   ["Ref", (data) => isRef(data) && data.value],
   ["Reactive", (data) => isReactive(data) && toRaw(data)]
 ];
-const revive_payload_server_Ho0CAVWOm_XLvEcfSsuHOSOd9YjGEz2PWwXG6295hls = /* @__PURE__ */ defineNuxtPlugin({
+const revive_payload_server_iuSj35fHW_ZZwt8eozyhzSIfhSgxbs_wfPXwss2WBOw = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:revive-payload:server",
   setup() {
     for (const [reducer, fn] of reducers) {
@@ -854,54 +976,54 @@ const revive_payload_server_Ho0CAVWOm_XLvEcfSsuHOSOd9YjGEz2PWwXG6295hls = /* @__
     }
   }
 });
-const LazyProseA = defineAsyncComponent(() => import('./A-BNGY-KYh.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseAccordion = defineAsyncComponent(() => import('./Accordion-6yCVwQqg.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseAccordionItem = defineAsyncComponent(() => import('./AccordionItem-Cp0pQ22q.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseBadge = defineAsyncComponent(() => import('./Badge-CqDUwUH1.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseBlockquote = defineAsyncComponent(() => import('./Blockquote-Bgmu4zny.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCallout = defineAsyncComponent(() => import('./Callout-5Cp5Xghu.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCard = defineAsyncComponent(() => import('./Card-CVbMkljF.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCardGroup = defineAsyncComponent(() => import('./CardGroup-CZkLDh2B.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCode = defineAsyncComponent(() => import('./Code-0mOemKrk.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCodeCollapse = defineAsyncComponent(() => import('./CodeCollapse-BzwsVM8Z.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCodeGroup = defineAsyncComponent(() => import('./CodeGroup-CBl9eMm_.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCodeIcon = defineAsyncComponent(() => import('./CodeIcon-Cwqxg0Jg.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCodePreview = defineAsyncComponent(() => import('./CodePreview-DmkgvqKm.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCodeTree = defineAsyncComponent(() => import('./CodeTree-B2ZakMY0.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCollapsible = defineAsyncComponent(() => import('./Collapsible-CdCrPdF0.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseEm = defineAsyncComponent(() => import('./Em-AW67wIC9.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseField = defineAsyncComponent(() => import('./Field-D5JBsRnX.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseFieldGroup = defineAsyncComponent(() => import('./FieldGroup-BXzDl4Kt.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseH1 = defineAsyncComponent(() => import('./H1-Qg5H86yl.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseH2 = defineAsyncComponent(() => import('./H2-D39N6_wa.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseH3 = defineAsyncComponent(() => import('./H3-_KHxiqkn.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseH4 = defineAsyncComponent(() => import('./H4-CCZNVDHl.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseHr = defineAsyncComponent(() => import('./Hr-cRU-BTqR.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseIcon = defineAsyncComponent(() => import('./Icon-C2YhhOFV.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseImg = defineAsyncComponent(() => import('./Img-dv-3I39S.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseKbd = defineAsyncComponent(() => import('./Kbd-UP4dyzQz.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseLi = defineAsyncComponent(() => import('./Li-CPUY1aFK.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseOl = defineAsyncComponent(() => import('./Ol-Q24Jplpu.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseP = defineAsyncComponent(() => import('./P-CFPHq8UW.mjs').then((r) => r["default"] || r.default || r));
-const LazyProsePre = defineAsyncComponent(() => import('./Pre-okayFW7E.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseScript = defineAsyncComponent(() => import('./Script-C40Fx2Av.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseSteps = defineAsyncComponent(() => import('./Steps-IFUfoE7s.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseStrong = defineAsyncComponent(() => import('./Strong-kLZImV5a.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseTable = defineAsyncComponent(() => import('./Table-B80LlauI.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseTabs = defineAsyncComponent(() => import('./Tabs-BbftlZEl.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseTabsItem = defineAsyncComponent(() => import('./TabsItem-BxARON5V.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseTbody = defineAsyncComponent(() => import('./Tbody-D2A4DDHh.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseTd = defineAsyncComponent(() => import('./Td-9rYzmu6t.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseTh = defineAsyncComponent(() => import('./Th-DLgdU3wu.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseThead = defineAsyncComponent(() => import('./Thead-DjkAm202.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseTr = defineAsyncComponent(() => import('./Tr-BSRI32YY.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseUl = defineAsyncComponent(() => import('./Ul-PMFN20Jc.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseCaution = defineAsyncComponent(() => import('./Caution-yok9TOQB.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseNote = defineAsyncComponent(() => import('./Note-CMyMm-vq.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseTip = defineAsyncComponent(() => import('./Tip-C2gEkVRC.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseWarning = defineAsyncComponent(() => import('./Warning-Dfqmrnma.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseH5 = defineAsyncComponent(() => import('./ProseH5-ChY2fOX3.mjs').then((r) => r["default"] || r.default || r));
-const LazyProseH6 = defineAsyncComponent(() => import('./ProseH6-fWdJH3oB.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseA = defineAsyncComponent(() => import('./A-By1Tpt0A.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseAccordion = defineAsyncComponent(() => import('./Accordion-D_2-2nBQ.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseAccordionItem = defineAsyncComponent(() => import('./AccordionItem-BPUTQwHo.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseBadge = defineAsyncComponent(() => import('./Badge-BPuP9l6N.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseBlockquote = defineAsyncComponent(() => import('./Blockquote-CAYBcEhh.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCallout = defineAsyncComponent(() => import('./Callout-B3LOqnym.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCard = defineAsyncComponent(() => import('./Card-CiWsJPZi.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCardGroup = defineAsyncComponent(() => import('./CardGroup-CYwqlNQi.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCode = defineAsyncComponent(() => import('./Code-CdJGUWmn.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCodeCollapse = defineAsyncComponent(() => import('./CodeCollapse-BDrvd4SA.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCodeGroup = defineAsyncComponent(() => import('./CodeGroup-BDBd-DbN.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCodeIcon = defineAsyncComponent(() => import('./CodeIcon-CEgeWq6N.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCodePreview = defineAsyncComponent(() => import('./CodePreview-DOxHNDFE.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCodeTree = defineAsyncComponent(() => import('./CodeTree-BGKFdltd.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCollapsible = defineAsyncComponent(() => import('./Collapsible-8Py7VRmf.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseEm = defineAsyncComponent(() => import('./Em-DHETxyfx.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseField = defineAsyncComponent(() => import('./Field-jzomEaev.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseFieldGroup = defineAsyncComponent(() => import('./FieldGroup-DZKUhYtc.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseH1 = defineAsyncComponent(() => import('./H1-qF5tSIaa.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseH2 = defineAsyncComponent(() => import('./H2-CscfAmv0.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseH3 = defineAsyncComponent(() => import('./H3-BrTXLU86.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseH4 = defineAsyncComponent(() => import('./H4-B6odeBhD.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseHr = defineAsyncComponent(() => import('./Hr-D8TuceCg.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseIcon = defineAsyncComponent(() => import('./Icon-BiqTPo8A.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseImg = defineAsyncComponent(() => import('./Img-D8OiolUC.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseKbd = defineAsyncComponent(() => import('./Kbd-DfDoqwpO.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseLi = defineAsyncComponent(() => import('./Li-CAHQc2NN.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseOl = defineAsyncComponent(() => import('./Ol-CpCGHv9_.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseP = defineAsyncComponent(() => import('./P-CpU85JY_.mjs').then((r) => r["default"] || r.default || r));
+const LazyProsePre = defineAsyncComponent(() => import('./Pre-dVlwhp69.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseScript = defineAsyncComponent(() => import('./Script-D38NNZk3.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseSteps = defineAsyncComponent(() => import('./Steps-BltaBT6z.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseStrong = defineAsyncComponent(() => import('./Strong-CPLB3y2y.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseTable = defineAsyncComponent(() => import('./Table-B1OVomHZ.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseTabs = defineAsyncComponent(() => import('./Tabs-YXiutj4X.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseTabsItem = defineAsyncComponent(() => import('./TabsItem-Bq2DB0DY.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseTbody = defineAsyncComponent(() => import('./Tbody-BKeLmxGB.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseTd = defineAsyncComponent(() => import('./Td-CQCmA6pz.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseTh = defineAsyncComponent(() => import('./Th-DSk0Qs4i.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseThead = defineAsyncComponent(() => import('./Thead-B-tszGQJ.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseTr = defineAsyncComponent(() => import('./Tr-C8gVYYlE.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseUl = defineAsyncComponent(() => import('./Ul-BthmSkHY.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseCaution = defineAsyncComponent(() => import('./Caution-hT7dE9vC.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseNote = defineAsyncComponent(() => import('./Note-DuJs-202.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseTip = defineAsyncComponent(() => import('./Tip-B_qyBQt2.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseWarning = defineAsyncComponent(() => import('./Warning-njai2hzh.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseH5 = defineAsyncComponent(() => import('./ProseH5-Qwb2sNM4.mjs').then((r) => r["default"] || r.default || r));
+const LazyProseH6 = defineAsyncComponent(() => import('./ProseH6-D7jcRnDq.mjs').then((r) => r["default"] || r.default || r));
 const LazyIcon = defineAsyncComponent(() => Promise.resolve().then(() => index).then((r) => r["default"] || r.default || r));
 const lazyGlobalComponents = [
   ["ProseA", LazyProseA],
@@ -968,6 +1090,10 @@ const cfg0 = defineAppConfig({
     {
       label: "服务器指北",
       to: "/docs"
+    },
+    {
+      label: "封神榜",
+      to: "/bans"
     }
   ],
   navigation: [
@@ -1091,6 +1217,7 @@ const cfg0 = defineAppConfig({
   },
   ui: {
     mdc: true,
+    fonts: false,
     colors: {
       primary: "amber",
       neutral: "slate"
@@ -1402,7 +1529,7 @@ function useAppConfig() {
   nuxtApp._appConfig ||= klona(appConfig);
   return nuxtApp._appConfig;
 }
-const plugin_OVkKtMtwUG4_8ZwKqJUyXMasdww5W5biqjZJEmww76E = /* @__PURE__ */ defineNuxtPlugin({
+const plugin_UK2eU0QujmJa4djAHcUPJd2sRrDeS8PMYu_G6aSmxE4 = /* @__PURE__ */ defineNuxtPlugin({
   name: "@nuxt/icon",
   setup() {
     const configs = /* @__PURE__ */ useRuntimeConfig();
@@ -1457,7 +1584,7 @@ function generateShades(key, value) {
 function generateColor(key, shade) {
   return `--ui-${key}: var(--ui-color-${key}-${shade});`;
 }
-const colors_5rs3aNKBwzmSLa5OfDk_APAWcly4rSLSDMLSYo8mJuE = /* @__PURE__ */ defineNuxtPlugin(() => {
+const colors_klKwMNJKJsryD5VWAZ_OMXpbkYa6szyYldugjpGhZtk = /* @__PURE__ */ defineNuxtPlugin(() => {
   const appConfig2 = useAppConfig();
   useNuxtApp();
   const root = computed(() => {
@@ -1532,20 +1659,20 @@ const plugin_server_LlmVocchW81w0V5SsaJLemsIvF2IHoteTyzHWZjumlg = /* @__PURE__ *
   });
   nuxtApp.provide("colorMode", colorMode);
 });
-const prerender_server_3L8vCTBKh9oFZOZ02oyxXn2QXiGyZSxXgYN0XyWZ5p0 = /* @__PURE__ */ defineNuxtPlugin(async () => {
+const prerender_server_1xX8CcSJG9qGmyqgWOeWadeOaawDtjcHYp8Mqfe5qFU = /* @__PURE__ */ defineNuxtPlugin(async () => {
   {
     return;
   }
 });
 const plugins = [
-  unhead_daW5jK6lKzXubJyLLxivSxxZ8skNtoWgFzYlCVJnrsY,
+  unhead_5VpTzxiG3rGTc_R3p7E55c6VYZ9eejBkr7KI3BaDtZw,
   plugin,
-  revive_payload_server_Ho0CAVWOm_XLvEcfSsuHOSOd9YjGEz2PWwXG6295hls,
+  revive_payload_server_iuSj35fHW_ZZwt8eozyhzSIfhSgxbs_wfPXwss2WBOw,
   components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8,
-  plugin_OVkKtMtwUG4_8ZwKqJUyXMasdww5W5biqjZJEmww76E,
-  colors_5rs3aNKBwzmSLa5OfDk_APAWcly4rSLSDMLSYo8mJuE,
+  plugin_UK2eU0QujmJa4djAHcUPJd2sRrDeS8PMYu_G6aSmxE4,
+  colors_klKwMNJKJsryD5VWAZ_OMXpbkYa6szyYldugjpGhZtk,
   plugin_server_LlmVocchW81w0V5SsaJLemsIvF2IHoteTyzHWZjumlg,
-  prerender_server_3L8vCTBKh9oFZOZ02oyxXn2QXiGyZSxXgYN0XyWZ5p0
+  prerender_server_1xX8CcSJG9qGmyqgWOeWadeOaawDtjcHYp8Mqfe5qFU
 ];
 function mapContentNavigationItem(item, options, currentDepth = 0) {
   const navMap = {
@@ -1595,6 +1722,62 @@ function get(object, path, defaultValue) {
 function looseToNumber(val) {
   const n = Number.parseFloat(val);
   return Number.isNaN(n) ? val : n;
+}
+function compare(value, currentValue, comparator) {
+  if (value === void 0 || currentValue === void 0) {
+    return false;
+  }
+  if (typeof value === "string") {
+    return value === currentValue;
+  }
+  return isEqual(value, currentValue);
+}
+function isEmpty(value) {
+  if (value == null) {
+    return true;
+  }
+  if (typeof value === "boolean" || typeof value === "number") {
+    return false;
+  }
+  if (typeof value === "string") {
+    return value.trim().length === 0;
+  }
+  if (Array.isArray(value)) {
+    return value.length === 0;
+  }
+  if (value instanceof Map || value instanceof Set) {
+    return value.size === 0;
+  }
+  if (value instanceof Date || value instanceof RegExp || typeof value === "function") {
+    return false;
+  }
+  if (typeof value === "object") {
+    for (const _ in value) {
+      if (Object.prototype.hasOwnProperty.call(value, _)) {
+        return false;
+      }
+    }
+    return true;
+  }
+  return false;
+}
+function getDisplayValue(items, value, options = {}) {
+  const { valueKey, labelKey } = options;
+  if (isEmpty(value)) {
+    return void 0;
+  }
+  const foundItem = items.find((item) => {
+    const itemValue = typeof item === "object" && item !== null && valueKey ? get(item, valueKey) : item;
+    return compare(itemValue, value);
+  });
+  const source = foundItem ?? value;
+  if (source === null || source === void 0) {
+    return void 0;
+  }
+  if (typeof source === "object") {
+    return labelKey ? get(source, labelKey) : void 0;
+  }
+  return String(source);
 }
 function isArrayOfArray(item) {
   return Array.isArray(item[0]);
@@ -2339,7 +2522,7 @@ const _sfc_main$y = {
 const _sfc_setup$y = _sfc_main$y.setup;
 _sfc_main$y.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Icon.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Icon.vue");
   return _sfc_setup$y ? _sfc_setup$y(props, ctx) : void 0;
 };
 const ImageComponent = "img";
@@ -2504,7 +2687,7 @@ const _sfc_main$x = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
 const _sfc_setup$x = _sfc_main$x.setup;
 _sfc_main$x.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Chip.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Chip.vue");
   return _sfc_setup$x ? _sfc_setup$x(props, ctx) : void 0;
 };
 const theme$l = {
@@ -2680,7 +2863,7 @@ const _sfc_main$w = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
 const _sfc_setup$w = _sfc_main$w.setup;
 _sfc_main$w.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Avatar.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Avatar.vue");
   return _sfc_setup$w ? _sfc_setup$w(props, ctx) : void 0;
 };
 function useComponentIcons(componentProps) {
@@ -2754,7 +2937,7 @@ function useFormField(props, opts) {
   }
   const emitFormInput = useDebounceFn(
     () => {
-      emitFormEvent("input", formField?.value.name, formField?.value.eagerValidation);
+      emitFormEvent("input", formField?.value.name, !opts?.deferInputValidation || formField?.value.eagerValidation);
     },
     formField?.value.validateOnInputDelay ?? formOptions?.value.validateOnInputDelay ?? 0
   );
@@ -3174,7 +3357,7 @@ const _sfc_main$v = {
 const _sfc_setup$v = _sfc_main$v.setup;
 _sfc_main$v.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/LinkBase.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/LinkBase.vue");
   return _sfc_setup$v ? _sfc_setup$v(props, ctx) : void 0;
 };
 const theme$k = {
@@ -3373,7 +3556,7 @@ const _sfc_main$u = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
 const _sfc_setup$u = _sfc_main$u.setup;
 _sfc_main$u.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Link.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Link.vue");
   return _sfc_setup$u ? _sfc_setup$u(props, ctx) : void 0;
 };
 const theme$j = {
@@ -3957,7 +4140,7 @@ const _sfc_main$t = {
 const _sfc_setup$t = _sfc_main$t.setup;
 _sfc_main$t.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Button.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Button.vue");
   return _sfc_setup$t ? _sfc_setup$t(props, ctx) : void 0;
 };
 const theme$i = {
@@ -4423,7 +4606,7 @@ const _sfc_main$s = {
 const _sfc_setup$s = _sfc_main$s.setup;
 _sfc_main$s.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Progress.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Progress.vue");
   return _sfc_setup$s ? _sfc_setup$s(props, ctx) : void 0;
 };
 const theme$h = {
@@ -4881,7 +5064,7 @@ const _sfc_main$r = {
 const _sfc_setup$r = _sfc_main$r.setup;
 _sfc_main$r.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Toast.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Toast.vue");
   return _sfc_setup$r ? _sfc_setup$r(props, ctx) : void 0;
 };
 const theme$g = {
@@ -5137,7 +5320,7 @@ const _sfc_main$q = /* @__PURE__ */ Object.assign(__default__$1, {
 const _sfc_setup$q = _sfc_main$q.setup;
 _sfc_main$q.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Toaster.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Toaster.vue");
   return _sfc_setup$q ? _sfc_setup$q(props, ctx) : void 0;
 };
 const UToaster = Object.assign(_sfc_main$q, { __name: "UToaster" });
@@ -5257,7 +5440,7 @@ const _sfc_main$p = {
 const _sfc_setup$p = _sfc_main$p.setup;
 _sfc_main$p.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/OverlayProvider.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/OverlayProvider.vue");
   return _sfc_setup$p ? _sfc_setup$p(props, ctx) : void 0;
 };
 const __default__ = {
@@ -5349,7 +5532,7 @@ const _sfc_main$o = /* @__PURE__ */ Object.assign(__default__, {
 const _sfc_setup$o = _sfc_main$o.setup;
 _sfc_main$o.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/App.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/App.vue");
   return _sfc_setup$o ? _sfc_setup$o(props, ctx) : void 0;
 };
 const __nuxt_component_0 = Object.assign(_sfc_main$o, { __name: "UApp" });
@@ -5389,7 +5572,7 @@ const _sfc_main$n = {
 const _sfc_setup$n = _sfc_main$n.setup;
 _sfc_main$n.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Container.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Container.vue");
   return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
 };
 const theme$e = {
@@ -5559,7 +5742,7 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
               }), {
                 default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                   if (_push3) {
-                    _push3(`<span class="absolute inset-0" aria-hidden="true" data-v-169e8a1e${_scopeId2}></span>`);
+                    _push3(`<span class="absolute inset-0" aria-hidden="true" data-v-bad5f9d0${_scopeId2}></span>`);
                   } else {
                     return [
                       createVNode("span", {
@@ -5579,7 +5762,7 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
             }, {
               default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                 if (_push3) {
-                  _push3(`<div class="${ssrRenderClass(ui.value.left({ class: props.ui?.left }))}" data-v-169e8a1e${_scopeId2}></div><div class="${ssrRenderClass(ui.value.center({ class: props.ui?.center }))}" data-v-169e8a1e${_scopeId2}>`);
+                  _push3(`<div class="${ssrRenderClass(ui.value.left({ class: props.ui?.left }))}" data-v-bad5f9d0${_scopeId2}></div><div class="${ssrRenderClass(ui.value.center({ class: props.ui?.center }))}" data-v-bad5f9d0${_scopeId2}>`);
                   ssrRenderSlot(_ctx.$slots, "leading", {}, () => {
                     if (__props.icon) {
                       _push3(ssrRenderComponent(_sfc_main$y, {
@@ -5591,7 +5774,7 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                     }
                   }, _push3, _parent3, _scopeId2);
                   if (__props.title || !!slots.title) {
-                    _push3(`<div class="${ssrRenderClass(ui.value.title({ class: props.ui?.title }))}" data-v-169e8a1e${_scopeId2}>`);
+                    _push3(`<div class="${ssrRenderClass(ui.value.title({ class: props.ui?.title }))}" data-v-bad5f9d0${_scopeId2}>`);
                     ssrRenderSlot(_ctx.$slots, "title", {}, () => {
                       _push3(`${ssrInterpolate(__props.title)}`);
                     }, _push3, _parent3, _scopeId2);
@@ -5600,7 +5783,7 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                     _push3(`<!---->`);
                   }
                   if (__props.actions?.length) {
-                    _push3(`<div class="${ssrRenderClass(ui.value.actions({ class: props.ui?.actions }))}" data-v-169e8a1e${_scopeId2}>`);
+                    _push3(`<div class="${ssrRenderClass(ui.value.actions({ class: props.ui?.actions }))}" data-v-bad5f9d0${_scopeId2}>`);
                     ssrRenderSlot(_ctx.$slots, "actions", {}, () => {
                       _push3(`<!--[-->`);
                       ssrRenderList(__props.actions, (action, index2) => {
@@ -5616,7 +5799,7 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
                   } else {
                     _push3(`<!---->`);
                   }
-                  _push3(`</div><div class="${ssrRenderClass(ui.value.right({ class: props.ui?.right }))}" data-v-169e8a1e${_scopeId2}>`);
+                  _push3(`</div><div class="${ssrRenderClass(ui.value.right({ class: props.ui?.right }))}" data-v-bad5f9d0${_scopeId2}>`);
                   ssrRenderSlot(_ctx.$slots, "close", { ui: ui.value }, () => {
                     if (__props.close) {
                       _push3(ssrRenderComponent(_sfc_main$t, mergeProps({
@@ -5783,10 +5966,10 @@ const _sfc_main$m = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
 const _sfc_setup$m = _sfc_main$m.setup;
 _sfc_main$m.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Banner.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Banner.vue");
   return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
 };
-const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["__scopeId", "data-v-169e8a1e"]]);
+const __nuxt_component_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["__scopeId", "data-v-bad5f9d0"]]);
 const theme$d = {
   "slots": {
     "overlay": "fixed inset-0 bg-elevated/75",
@@ -6467,7 +6650,7 @@ const _sfc_main$l = {
 const _sfc_setup$l = _sfc_main$l.setup;
 _sfc_main$l.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Slideover.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Slideover.vue");
   return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
 };
 const theme$c = {
@@ -7119,7 +7302,7 @@ const _sfc_main$k = {
 const _sfc_setup$k = _sfc_main$k.setup;
 _sfc_main$k.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Modal.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Modal.vue");
   return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
 };
 const theme$b = {
@@ -7753,7 +7936,7 @@ const _sfc_main$j = {
 const _sfc_setup$j = _sfc_main$j.setup;
 _sfc_main$j.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Drawer.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Drawer.vue");
   return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
 };
 const theme$a = {
@@ -8065,7 +8248,7 @@ const _sfc_main$i = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
 const _sfc_setup$i = _sfc_main$i.setup;
 _sfc_main$i.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Header.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Header.vue");
   return _sfc_setup$i ? _sfc_setup$i(props, ctx) : void 0;
 };
 const _imports_0 = publicAssetsURL("/orange.webp");
@@ -8428,7 +8611,7 @@ const _sfc_main$g = {
 const _sfc_setup$g = _sfc_main$g.setup;
 _sfc_main$g.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Badge.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Badge.vue");
   return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
 };
 const theme$8 = {
@@ -8617,7 +8800,7 @@ const _sfc_main$f = {
 const _sfc_setup$f = _sfc_main$f.setup;
 _sfc_main$f.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Popover.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Popover.vue");
   return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
 const kbdKeysMap = {
@@ -8880,7 +9063,7 @@ const _sfc_main$e = {
 const _sfc_setup$e = _sfc_main$e.setup;
 _sfc_main$e.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Kbd.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Kbd.vue");
   return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
 const theme$6 = {
@@ -9101,7 +9284,7 @@ const _sfc_main$d = {
 const _sfc_setup$d = _sfc_main$d.setup;
 _sfc_main$d.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Tooltip.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Tooltip.vue");
   return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
 };
 const theme$5 = {
@@ -11451,7 +11634,7 @@ const _sfc_main$c = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
 const _sfc_setup$c = _sfc_main$c.setup;
 _sfc_main$c.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/NavigationMenu.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/NavigationMenu.vue");
   return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
 };
 const useColorMode = () => {
@@ -11503,7 +11686,7 @@ const _sfc_main$b = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
 const _sfc_setup$b = _sfc_main$b.setup;
 _sfc_main$b.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/color-mode/ColorModeButton.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/color-mode/ColorModeButton.vue");
   return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
 };
 const theme$4 = {
@@ -11747,7 +11930,7 @@ const _sfc_main$a = {
 const _sfc_setup$a = _sfc_main$a.setup;
 _sfc_main$a.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Separator.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Separator.vue");
   return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
 };
 function _useContentSearch() {
@@ -11941,7 +12124,7 @@ const _sfc_main$9 = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
 const _sfc_setup$9 = _sfc_main$9.setup;
 _sfc_main$9.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/content/ContentSearchButton.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/content/ContentSearchButton.vue");
   return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
 };
 const theme$2 = {
@@ -12876,7 +13059,7 @@ const _sfc_main$8 = /* @__PURE__ */ Object.assign({ inheritAttrs: false }, {
 const _sfc_setup$8 = _sfc_main$8.setup;
 _sfc_main$8.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/content/ContentNavigation.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/content/ContentNavigation.vue");
   return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
 };
 const _sfc_main$7 = /* @__PURE__ */ defineComponent({
@@ -13173,10 +13356,13 @@ const _sfc_main$6 = {
 const _sfc_setup$6 = _sfc_main$6.setup;
 _sfc_main$6.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Main.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Main.vue");
   return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
 };
-const layouts = {};
+const layouts = {
+  bans: defineAsyncComponent(() => import('./bans-BqwBiLfD.mjs').then((m) => m.default || m)),
+  default: defineAsyncComponent(() => import('./default-inWx19ur.mjs').then((m) => m.default || m))
+};
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
   inheritAttrs: false,
@@ -13513,7 +13699,7 @@ const _sfc_main$5 = {
 const _sfc_setup$5 = _sfc_main$5.setup;
 _sfc_main$5.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@babel+parser@7.28.3_change-case@5.4.4_db0@0.3.2_better-sqlite3@_2f07df7ffe6b8d13a95399386992709b/node_modules/@nuxt/ui/dist/runtime/components/Footer.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/@nuxt+ui@4.0.0-alpha.1_@bab_01b8e4c3f51a2b4e0cb534dba2e2c4de/node_modules/@nuxt/ui/dist/runtime/components/Footer.vue");
   return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
 };
 const _sfc_main$4 = {};
@@ -13694,8 +13880,8 @@ const _sfc_main$1 = {
     const statusMessage = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import('./error-404-Dg-1lWZ_.mjs'));
-    const _Error = defineAsyncComponent(() => import('./error-500-F3fMkUKQ.mjs'));
+    const _Error404 = defineAsyncComponent(() => import('./error-404-Bn9e2Xhy.mjs'));
+    const _Error = defineAsyncComponent(() => import('./error-500-CCG19OM8.mjs'));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(unref(ErrorTemplate), mergeProps({ statusCode: unref(statusCode), statusMessage: unref(statusMessage), description: unref(description), stack: unref(stack) }, _attrs), null, _parent));
@@ -13705,7 +13891,7 @@ const _sfc_main$1 = {
 const _sfc_setup$1 = _sfc_main$1.setup;
 _sfc_main$1.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/nuxt@4.1.0_@parcel+watcher@2.5.1_@vue+compiler-sfc@3.5.21_better-sqlite3@12.2.0_db0@0.3_543f143b159904efa9b81ff8ddb42b11/node_modules/nuxt/dist/app/components/nuxt-error-page.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/nuxt@4.1.0_@parcel+watcher@_d4d46d5f9ce32348a6b442accc64a186/node_modules/nuxt/dist/app/components/nuxt-error-page.vue");
   return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
 };
 const _sfc_main = {
@@ -13753,7 +13939,7 @@ const _sfc_main = {
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/nuxt@4.1.0_@parcel+watcher@2.5.1_@vue+compiler-sfc@3.5.21_better-sqlite3@12.2.0_db0@0.3_543f143b159904efa9b81ff8ddb42b11/node_modules/nuxt/dist/app/components/nuxt-root.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("../node_modules/.pnpm/nuxt@4.1.0_@parcel+watcher@_d4d46d5f9ce32348a6b442accc64a186/node_modules/nuxt/dist/app/components/nuxt-root.vue");
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
 let entry;
@@ -13776,5 +13962,5 @@ let entry;
 }
 const entry$1 = (ssrContext) => entry(ssrContext);
 
-export { useFieldGroup as A, useComponentIcons as B, looseToNumber as C, omit as D, pickLinkProps as E, _sfc_main$v as F, _sfc_main$x as G, useKbd as H, ImageComponent as I, useContentSearch as J, useColorMode as K, _sfc_main$k as L, _export_sfc as _, __nuxt_component_0$1 as a, useSeoMeta as b, __nuxt_component_1$2 as c, useAppConfig as d, entry$1 as default, useRuntimeConfig as e, useLocale as f, useRouter as g, useNuxtApp as h, _sfc_main$y as i, tryUseNuxtApp as j, useRoute as k, useAsyncData as l, createError as m, __nuxt_component_7$1 as n, _sfc_main$9 as o, _sfc_main$8 as p, _sfc_main$u as q, get as r, transformUI as s, tv as t, useHead as u, _sfc_main$g as v, _sfc_main$t as w, _sfc_main$e as x, _sfc_main$w as y, useFormField as z };
+export { createError as A, __nuxt_component_7$1 as B, _sfc_main$9 as C, _sfc_main$8 as D, _sfc_main$u as E, transformUI as F, looseToNumber as G, _sfc_main$e as H, ImageComponent as I, navigateTo as J, omit as K, pickLinkProps as L, _sfc_main$v as M, useKbd as N, useContentSearch as O, useColorMode as P, _sfc_main$k as Q, _export_sfc as _, __nuxt_component_0$1 as a, useSeoMeta as b, __nuxt_component_1$2 as c, useAsyncData as d, entry$1 as default, _sfc_main$a as e, _sfc_main$g as f, useAppConfig as g, usePortal as h, useFormField as i, useFieldGroup as j, useComponentIcons as k, isArrayOfArray as l, _sfc_main$y as m, _sfc_main$w as n, get as o, _sfc_main$x as p, getDisplayValue as q, useLocale as r, _sfc_main$t as s, tv as t, useHead as u, useRuntimeConfig as v, useRouter as w, useNuxtApp as x, tryUseNuxtApp as y, useRoute as z };
 //# sourceMappingURL=server.mjs.map
