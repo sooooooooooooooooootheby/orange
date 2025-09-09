@@ -1,1 +1,0 @@
-const g=n=>{const t=new Date(n),e=d=>d.toString().padStart(2,"0"),o=t.getFullYear(),s=e(t.getMonth()+1),a=e(t.getDate()),c=e(t.getHours()),r=e(t.getMinutes());return`${o}/${s}/${a} ${c}:${r}`};export{g as h};
