@@ -55,6 +55,13 @@ jobs:
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
+      - name: Create .env on server
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            PROJECT_DIR="/home/website/orange"
+            echo "${{ secrets.ENV }}" > "$PROJECT_DIR/.env"
+          EOF
+
       - name: Execute deployment commands on server
         run: |
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
