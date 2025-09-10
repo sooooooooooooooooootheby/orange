@@ -6,8 +6,9 @@ on:
       - main
 
 jobs:
-  build_and_deploy:
+  build:
     runs-on: ubuntu-latest
+    name: build
 
     steps:
       - name: Checkout code
@@ -32,6 +33,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    name: deploy
+    needs: build
+
     steps:
       - name: Upload build to server
         run: |
