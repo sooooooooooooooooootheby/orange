@@ -39,6 +39,9 @@ jobs:
 
       - name: Upload build to server
         run: |
+          ls /home/runner/work/
+          ls /home/runner/work/orange/
+          ls /home/runner/work/orange/orange/
           rsync -avz /home/runner/work/orange/orange/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website/orange
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
