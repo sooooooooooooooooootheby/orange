@@ -21,6 +21,13 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm run build --if-present
 
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+
       - name: Upload build to server
         run: |
           scp -r /home/runner/work/orange/orange/.output/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_TARGET_PATH }}
