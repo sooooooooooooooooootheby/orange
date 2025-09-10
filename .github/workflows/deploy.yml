@@ -39,33 +39,40 @@ jobs:
 
       - name: Upload build to server
         run: |
+          rm -rf /home/website/orange
           rsync -avz /home/runner/work/orange/orange/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website/orange
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Create .env on server
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            PROJECT_DIR="/home/website/orange"
+            echo "${{ secrets.ENV }}" > "$PROJECT_DIR/.env"
 
       - name: Execute deployment commands on server
         run: |
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             set -e
-          
+
             # 加载 Node 和 pnpm 路径
             export PATH="/home/website/.nvm/versions/node/v22.19.0/bin:$PATH"
             export PATH="/home/website/.local/share/pnpm:$PATH"
-  
+
             # 进入项目目录
             PROJECT_DIR="/home/website/orange"
             mkdir -p "$PROJECT_DIR"
             cd "$PROJECT_DIR"
-  
+
             echo "📦 开始安装依赖..."
             pnpm install --prefer-frozen-lockfile
-  
+
             # 如果 better-sqlite3 已安装则 rebuild
             if pnpm list better-sqlite3 >/dev/null 2>&1; then
               echo "🔨 重新编译 better-sqlite3..."
               pnpm rebuild better-sqlite3
             fi
-  
+
             echo "✅ 重启 PM2 服务..."
             if ! pm2 list | grep -q 'orange'; then
               echo "🟢 'orange' 服务未运行，正在启动..."
