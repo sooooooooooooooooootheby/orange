@@ -22,12 +22,26 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm run build --if-present
 
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            .output
+            ecosystem.config.cjs
+
   deploy:
     runs-on: ubuntu-latest
     name: deploy
     needs: build
 
     steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./build-artifacts
+
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
@@ -41,8 +55,8 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "rm -rf /home/website/orange"
           rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
-            /home/runner/work/orange/orange/.output \
-            /home/runner/work/orange/orange/ecosystem.config.cjs \
+            ./build-artifacts/.output \
+            ./build-artifacts/ecosystem.config.cjs \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website/orange
 
       - name: Upload .env file
