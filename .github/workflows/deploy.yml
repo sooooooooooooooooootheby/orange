@@ -32,17 +32,15 @@ jobs:
 
       - name: Upload build to server
         run: |
-          rsync -avz --progress /home/runner/work/orange/orange/.output/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website/orange
+          rsync -avz --progress /home/runner/work/orange/orange/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Execute deployment commands on server
         run: |
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd ${{ secrets.REMOTE_TARGET_PATH }}
-            pnpm install --frozen-lockfile
-            pm2 restart orange || pm2 start ecosystem.config.js
-            echo "Deployment completed"
+            cd /home/website
+            sh sh update_orange.sh
           EOF
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
