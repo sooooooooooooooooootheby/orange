@@ -31,6 +31,9 @@ let guildCache: GuildCache = {
 };
 
 export default defineEventHandler(async (event): Promise<SuccessResponse | void> => {
+	console.log(useRuntimeConfig());
+	console.log(useRuntimeConfig().databaseHost);
+
 	const now = Date.now();
 	if (guildCache.data && now - guildCache.timestamp < CACHE_DURATION) {
 		return {
