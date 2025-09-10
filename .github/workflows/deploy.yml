@@ -1,0 +1,67 @@
+name: Build and Deploy (scp)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 如果你用 pnpm，可按需设置；这里假设你已经有构建命令：
+      - name: Install deps & build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run build --if-present
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-output
+          path: .output   # <- 改成你的构建产物目录 (例如 dist 或 .output)
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: built-output
+          path: ./dist   # 在 runner 上的临时目录
+
+      - name: Setup known_hosts and private key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          # add host key to known_hosts to avoid interactive prompt
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Copy files to server (SCP)
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          source: "dist/*"
+          target: "${{ secrets.REMOTE_TARGET_PATH }}"
+
+      - name: Run remote commands (restart / move)
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            set -e
+            cd ${{ secrets.REMOTE_TARGET_PATH }}
+            # 例如：如果上传的是一个临时文件夹，移动替换、安装依赖或重启服务
+            # mv tmp-new/* .
+            # 如果是 node 服务，下面是示例：
+            pnpm install --frozen-lockfile
+            pm2 restart orange || pm2 start ecosystem.config.js
+            echo "deploy finished"
