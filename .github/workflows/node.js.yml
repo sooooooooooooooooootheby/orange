@@ -1,0 +1,30 @@
+name: Build and Export Artifact
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '23.x'
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test --if-present
+
+    - name: Upload production build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: built-output
+        path: |
+          .output
