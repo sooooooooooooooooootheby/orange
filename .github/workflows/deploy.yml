@@ -30,6 +30,9 @@ jobs:
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
 
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Upload build to server
         run: |
           rsync -avz /home/runner/work/orange/orange/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website/orange
@@ -39,8 +42,36 @@ jobs:
       - name: Execute deployment commands on server
         run: |
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd /home/website
-            sh update_orange.sh
+            set -e
+          
+            # 加载 Node 和 pnpm 路径
+            export PATH="/home/website/.nvm/versions/node/v22.19.0/bin:$PATH"
+            export PATH="/home/website/.local/share/pnpm:$PATH"
+  
+            # 进入项目目录
+            PROJECT_DIR="/home/website/orange"
+            mkdir -p "$PROJECT_DIR"
+            cd "$PROJECT_DIR"
+  
+            echo "📦 开始安装依赖..."
+            pnpm install --frozen-lockfile
+  
+            # 如果 better-sqlite3 已安装则 rebuild
+            if pnpm list better-sqlite3 >/dev/null 2>&1; then
+              echo "🔨 重新编译 better-sqlite3..."
+              pnpm rebuild better-sqlite3
+            fi
+  
+            echo "✅ 重启 PM2 服务..."
+            if ! pm2 list | grep -q 'orange'; then
+              echo "🟢 'orange' 服务未运行，正在启动..."
+              pm2 start ecosystem.config.cjs --name orange
+            else
+              echo "🟡 'orange' 服务已在运行，正在重启..."
+              pm2 restart orange
+            fi
+            pm2 save
+            echo "🎉 部署完成！"
           EOF
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
