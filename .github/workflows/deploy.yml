@@ -23,7 +23,7 @@ jobs:
 
       - name: Upload build to server
         run: |
-          scp -r ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_TARGET_PATH }}
+          scp -r ./output/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_TARGET_PATH }}
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
