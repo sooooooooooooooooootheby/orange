@@ -22,6 +22,12 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm run build --if-present
 
+  deploy:
+    runs-on: ubuntu-latest
+    name: deploy
+    needs: build
+
+    steps:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
@@ -33,21 +39,9 @@ jobs:
 
       - name: Upload build to server
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-            rm -rf /home/website/orange && mkdir -p /home/website/orange
-          "
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
-            ./build-artifacts/.output \
-            ./build-artifacts/ecosystem.config.cjs \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website/orange
+          rsync -avz /home/runner/work/orange/orange/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website/orange
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Create .env on server
-        run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            PROJECT_DIR="/home/website/orange"
-            echo "${{ secrets.ENV }}" > "$PROJECT_DIR/.env"
 
       - name: Execute deployment commands on server
         run: |
