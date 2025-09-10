@@ -58,7 +58,7 @@ jobs:
             cd "$PROJECT_DIR"
   
             echo "📦 开始安装依赖..."
-            pnpm install --frozen-lockfile
+            pnpm install --prefer-frozen-lockfile --yes
   
             # 如果 better-sqlite3 已安装则 rebuild
             if pnpm list better-sqlite3 >/dev/null 2>&1; then
