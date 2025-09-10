@@ -2,69 +2,40 @@ name: Build and Deploy
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Install pnpm
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js and pnpm
         uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: Install dependencies and build
         run: |
           pnpm install --frozen-lockfile
           pnpm run build --if-present
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: built-output
-          path: .output/**
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: built-output
-          path: ./dist
-
-      - name: Setup known_hosts and private key
+      - name: Upload build to server
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          # Add host key to known_hosts to avoid interactive prompt
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          scp -r ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_TARGET_PATH }}
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Copy files to server (SCP)
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          source: "dist/*"
-          target: "${{ secrets.REMOTE_TARGET_PATH }}"
-
-      - name: Run remote commands (restart / move)
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          script: |
-            set -e
+      - name: Execute deployment commands on server
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd ${{ secrets.REMOTE_TARGET_PATH }}
-            # Example: If uploading to a temporary folder, move and replace, install dependencies, or restart services
-            # mv tmp-new/* .
-            # If it's a Node.js service, the following is an example:
             pnpm install --frozen-lockfile
-            pm2 restart orange || pm2 start ecosystem.config.js
-            echo "Deploy finished"
+            pm2 restart your-app || pm2 start ecosystem.config.js
+            echo "Deployment completed"
+          EOF
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
