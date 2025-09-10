@@ -32,7 +32,7 @@ jobs:
 
       - name: Upload build to server
         run: |
-          scp -r /home/runner/work/orange/orange/.output/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_TARGET_PATH }}
+          rsync -avz --progress /home/runner/work/orange/orange/.output/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website/orange
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
