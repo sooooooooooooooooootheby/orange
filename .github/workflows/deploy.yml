@@ -54,6 +54,7 @@ jobs:
       - name: Upload build to server
         run: |
           rm -rf /home/website/orange
+          mkdir /home/website/orange
           rsync -avz /home/runner/work/orange/orange/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website/orange
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
