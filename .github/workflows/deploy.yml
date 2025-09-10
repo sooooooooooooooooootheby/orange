@@ -21,9 +21,11 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm run build --if-present
 
-      - name: Add server to known_hosts
+      - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
