@@ -72,7 +72,7 @@ jobs:
 
       - name: deploy on server
         run: |
-          ssh -p ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'ENDSSH'
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'ENDSSH'
 
           export PATH="/home/${{ secrets.SSH_USER }}/.nvm/versions/node/v22.19.0/bin:$PATH"
 
