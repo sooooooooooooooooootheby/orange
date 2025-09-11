@@ -16,7 +16,7 @@ jobs:
     steps:
       # 将 repo 的代码拿到容器中
       - name: Checkout code
-        uses: orange/checkout@v4
+        uses: actions/checkout@v4
 
       # 设置 node 环境和 pnpm 包管理器
       - name: Set up Node.js and pnpm
