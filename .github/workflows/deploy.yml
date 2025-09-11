@@ -22,6 +22,11 @@ jobs:
       - name: Set up Node.js and pnpm
         uses: pnpm/action-setup@v4
 
+      # 添加环境变量
+      - name: set env
+        run: |
+          echo '${{ secrets.ENV }}' > /home/${{ secrets.SSH_USER }}/orange/.env
+
       # 安装依赖和 build
       - name: Install dependencies and build
         run: |
@@ -65,10 +70,6 @@ jobs:
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
-
-      - name: add env
-        run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo '${{ secrets.ENV }}' > /home/${{ secrets.SSH_USER }}/orange/.env"
 
       - name: deploy on server
         run: |
