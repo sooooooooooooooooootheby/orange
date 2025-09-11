@@ -85,7 +85,7 @@ jobs:
             echo "✅ 重启 PM2 服务..."
             if ! pm2 list | grep -q 'orange'; then
               echo "🟢 'orange' 服务未运行，正在启动..."
-              pm2 start ecosystem.config.cjs --name orange --env .env
+              pm2 start ecosystem.config.cjs --env production
             else
               echo "🟡 'orange' 服务已在运行，正在重启..."
               pm2 restart orange
