@@ -20,23 +20,14 @@
 							</div>
 							<p class="text-sm text-gray-400 dark:text-gray-600">{{ item.reason }}</p>
 							<div class="mt-2 flex items-center gap-1">
-								<UBadge
-									icon="gravity-ui:clock"
-									size="md"
-									color="error"
-									variant="soft"
-									class="rounded-full"
-									v-if="item.until === 0 && isBan(item.removed_by_date, item.until)"
-								>
-									永久禁言
-								</UBadge>
-								<UBadge icon="gravity-ui:clock" size="md" color="success" variant="soft" class="rounded-full" v-else-if="!item.removed_by_date">
+								<UBadge icon="gravity-ui:clock" size="md" color="success" variant="soft" class="rounded-full" v-if="!item.removed_by_date">
 									{{ handleTime(item.until) }}
 								</UBadge>
+								<UBadge icon="gravity-ui:clock" size="md" :color="isBan(item.removed_by_date, item.until) ? 'error' : 'success'" variant="soft" class="rounded-full" v-else> 永久禁言 </UBadge>
 								<UBadge icon="gravity-ui:ban" size="md" color="error" variant="soft" class="rounded-full" v-if="isBan(item.removed_by_date, item.until)">
 									禁言中
 								</UBadge>
-								<UBadge icon="gravity-ui:circle-check" size="md" color="success" variant="soft" class="rounded-full" v-else> 已解封 </UBadge>
+								<UBadge icon="gravity-ui:circle-check" size="md" color="success" variant="soft" class="rounded-full" v-else> 已解禁 </UBadge>
 								<UBadge color="error" variant="outline" size="md" class="rounded-full" v-if="item.ipban.data[0] !== 0">Ban IP</UBadge>
 							</div>
 						</div>

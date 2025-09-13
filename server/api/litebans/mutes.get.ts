@@ -25,7 +25,7 @@ export default defineEventHandler(async (event): Promise<SuccessResponseA | void
 				(SELECT name FROM litebans_history WHERE uuid = b.uuid LIMIT 1) AS name,
 				b.reason,
 				b.banned_by_name,
-				b.removed_by_name,
+				b.removed_by_date,
 				b.time,
 				b.until,
 				b.ipban
