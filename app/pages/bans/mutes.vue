@@ -23,7 +23,16 @@
 								<UBadge icon="gravity-ui:clock" size="md" color="success" variant="soft" class="rounded-full" v-if="!item.removed_by_date">
 									{{ handleTime(item.until) }}
 								</UBadge>
-								<UBadge icon="gravity-ui:clock" size="md" :color="isBan(item.removed_by_date, item.until) ? 'error' : 'success'" variant="soft" class="rounded-full" v-else> 永久禁言 </UBadge>
+								<UBadge
+									icon="gravity-ui:clock"
+									size="md"
+									:color="isBan(item.removed_by_date, item.until) ? 'error' : 'success'"
+									variant="soft"
+									class="rounded-full"
+									v-else
+								>
+									永久禁言
+								</UBadge>
 								<UBadge icon="gravity-ui:ban" size="md" color="error" variant="soft" class="rounded-full" v-if="isBan(item.removed_by_date, item.until)">
 									禁言中
 								</UBadge>
@@ -35,6 +44,7 @@
 				</div>
 			</div>
 		</div>
+		<UAlert color="info" variant="soft" title="还没有禁言记录哦" icon="gravity-ui:exclamation-shape" v-if="data?.data.length === 0" />
 	</div>
 </template>
 

@@ -14,13 +14,13 @@
 						</div>
 						<USeparator type="dashed" />
 						<p>
-							<span class="font-bold">{{ item.name }}</span> 因为 <span class="font-bold">"{{ item.reason }}"</span> 被
-							<span class="font-bold">{{ item.banned_by_name }}</span> 警告
+							<span class="font-bold">{{ item.name }}</span> 因为 <span class="font-bold">"{{ item.reason }}"</span> 被警告
 						</p>
 					</div>
 				</div>
 			</div>
 		</div>
+		<UAlert color="info" variant="soft" title="还没有警告记录哦" icon="gravity-ui:exclamation-shape" v-if="data?.data.length === 0" />
 	</div>
 </template>
 

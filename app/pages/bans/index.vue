@@ -44,6 +44,7 @@
 				</div>
 			</div>
 		</div>
+		<UAlert color="info" variant="soft" title="还没有封禁记录哦" icon="gravity-ui:exclamation-shape" v-if="data?.data.length === 0" />
 	</div>
 </template>
 
