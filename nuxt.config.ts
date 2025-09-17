@@ -30,6 +30,12 @@ export default defineNuxtConfig({
 		},
 	},
 
+	nitro: {
+		experimental: {
+			database: true,
+		},
+	},
+
 	runtimeConfig: {
 		databaseHost: process.env.DB_HOST,
 		databaseUser: process.env.DB_USER,

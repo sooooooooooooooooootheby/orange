@@ -8,6 +8,10 @@ export default defineAppConfig({
 			label: "封神榜",
 			to: "/bans",
 		},
+		{
+			label: "蓝图",
+			to: "/blueMaps",
+		},
 	],
 	navigation: [
 		{

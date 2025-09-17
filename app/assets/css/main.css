@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 @plugin "tailwindcss-pattern";
+@import 'tailwind-scrollbar-hide/v4';
 
 * {
 	font-family: "寒蝉全圆体";
