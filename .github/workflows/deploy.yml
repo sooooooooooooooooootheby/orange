@@ -50,6 +50,8 @@ jobs:
                   rsync -avz \
                     /home/runner/work/orange/orange/.output \
                     /home/runner/work/orange/orange/ecosystem.config.cjs \
+                    /home/runner/work/orange/orange/pnpm-lock.yaml \
+                    /home/runner/work/orange/orange/package.json \
                     ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/orange
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -76,6 +78,9 @@ jobs:
                   export PATH="/home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin:$PATH"
 
                   cd /home/${{ secrets.SSH_USER }}/orange
+
+                  /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pnpm install --frozen-lockfile
+                  /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pnpm rebuild better-sqlite3
 
                   if ! /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 list | grep -q 'orange'; then
                     echo "🟢 'orange' 服务未运行，正在启动..."
