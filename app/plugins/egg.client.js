@@ -133,19 +133,6 @@ export default defineNuxtPlugin(() => {
             traverseAndScramble(root);
             rotateImagesRandom({ minDeg: -180, maxDeg: 180, duration: 700 });
             confetti.fire();
-            const toast = useToast();
-
-            const showToast = () => {
-                toast.add({
-                    title: "恭喜你!",
-                    description: h("div", [
-                        h("p", "你发现了彩蛋, 快去私聊AliceIClodia, 领取一百大橙通宝."),
-                    ]),
-                    duration: 6000,
-                });
-            };
-            showToast();
-
             window.dispatchEvent(new CustomEvent("text-disorder"));
 
             // 重置状态，允许再次触发

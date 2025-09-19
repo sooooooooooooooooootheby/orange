@@ -14,25 +14,7 @@
 	</UApp>
 </template>
 
-<script lang="ts" setup>
-const toast = useToast();
-
-const showToast = () => {
-	toast.add({
-		title: "网站的彩蛋还没被人发现哦",
-		description: h("div", [
-			h("p", "当你你进入了这个网站, 还能看到这条提示就说明彩蛋还没被人发现."),
-			h("p", "发现彩蛋请私聊AliceIClodia, 领取一百大橙通宝."),
-			h("p", "彩蛋提示: `哦干呢`"),
-		]),
-		duration: 18000,
-	});
-}
-
-onMounted(() => {
-	showToast();
-});
-</script>
+<script lang="ts" setup></script>
 
 <style>
 .page-enter-active,
