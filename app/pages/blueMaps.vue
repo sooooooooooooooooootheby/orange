@@ -1,5 +1,5 @@
 <template>
-	<div class="mx-auto min-h-[calc(100vh-var(--ui-header-height))] max-w-(--ui-container) py-12">
+	<div class="mx-auto min-h-[calc(100vh-var(--ui-header-height))] max-w-(--ui-container) py-12 max-md:px-4">
 		<div>
 			<p class="text-4xl">蓝图</p>
 			<p class="text-gray-400">Blue Maps</p>
@@ -51,11 +51,11 @@
 				</div>
 
 				<template #content>
-					<div class="flex gap-2 p-1">
+					<div class="flex gap-2 p-1 max-md:flex-col">
 						<UCarousel v-slot="item" loop auto-height :autoplay="{ delay: 4000 }" :items="item.image" class="mx-auto">
 							<img :src="item.item" :alt="item" class="rounded-lg" />
 						</UCarousel>
-						<div class="flex w-sm shrink-0 flex-col p-4">
+						<div class="flex md:w-sm shrink-0 flex-col p-4 w-full">
 							<div class="flex-1">
 								<p class="text-2xl">{{ item.title }}</p>
 								<p class="text-gray-500">{{ item.info }}</p>
