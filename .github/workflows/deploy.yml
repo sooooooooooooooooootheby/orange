@@ -18,11 +18,18 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
+            # 设置特定的 Node.js 版本 v23.9.0
             - name: Set up Node.js v23.9.0
               uses: actions/setup-node@v4
               with:
                   node-version: '23.9.0'
                   cache: 'pnpm'
+
+            # 安装 pnpm
+            - name: Install pnpm
+              run: |
+                  npm install -g pnpm
+                  pnpm --version
 
             # 添加环境变量
             - name: set env
