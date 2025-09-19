@@ -1,4 +1,4 @@
 onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - better-sqlite3
-  - vue-demi
+    - "@tailwindcss/oxide"
+    - better-sqlite3
+    - vue-demi

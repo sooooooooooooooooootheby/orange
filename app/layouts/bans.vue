@@ -5,10 +5,10 @@
 			<p>在这里你可以查看有哪些玩家被</p>
 			<p class="font-bold">封禁, 禁言, 警告, 踢出</p>
 		</div>
-		<div class="px-6 mb-6">
-			<UTabs v-model="activeTab" :items="tabItems" class="max-w-xl mx-auto" size="xs" />
+		<div class="mb-6 px-6">
+			<UTabs v-model="activeTab" :items="tabItems" class="mx-auto max-w-xl" size="xs" />
 		</div>
-		<div class="px-2 mx-auto md:w-xl">
+		<div class="mx-auto px-2 md:w-xl">
 			<slot />
 		</div>
 	</div>

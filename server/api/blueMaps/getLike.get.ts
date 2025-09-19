@@ -10,13 +10,13 @@ export default defineEventHandler(async (event) => {
 		SELECT COUNT(*) AS total
 		FROM blueMaps_like
 		WHERE bid = ${bid}
-	`
+	`;
 
 	return {
 		success: true,
 		data: {
 			bid,
-			totalLikes: rows[0]?.total ?? 0
+			totalLikes: rows[0]?.total ?? 0,
 		},
 	};
 });

@@ -1,92 +1,92 @@
 name: Build and Deploy
 
 on:
-  push:
-    branches: [ main, master ]
+    push:
+        branches: [main, master]
 
 jobs:
-  # 这里是构建 job
-  build:
-    # job 使用的容器环境
-    runs-on: ubuntu-latest
-    # job 的名字
-    name: build
+    # 这里是构建 job
+    build:
+        # job 使用的容器环境
+        runs-on: ubuntu-latest
+        # job 的名字
+        name: build
 
-    # job 的步骤
-    steps:
-      # 将 repo 的代码拿到容器中
-      - name: Checkout code
-        uses: actions/checkout@v4
+        # job 的步骤
+        steps:
+            # 将 repo 的代码拿到容器中
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      # 设置 node 环境和 pnpm 包管理器
-      - name: Set up Node.js and pnpm
-        uses: pnpm/action-setup@v4
+            # 设置 node 环境和 pnpm 包管理器
+            - name: Set up Node.js and pnpm
+              uses: pnpm/action-setup@v4
 
-      # 添加环境变量
-      - name: set env
-        run: |
-          echo '${{ secrets.ENV }}' > /home/runner/work/orange/orange/.env
+            # 添加环境变量
+            - name: set env
+              run: |
+                  echo '${{ secrets.ENV }}' > /home/runner/work/orange/orange/.env
 
-      # 安装依赖和 build
-      - name: Install dependencies and build
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm run build --if-present
+            # 安装依赖和 build
+            - name: Install dependencies and build
+              run: |
+                  pnpm install --frozen-lockfile
+                  pnpm run build --if-present
 
-      # 设置 ssh
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+            # 设置 ssh
+            - name: Set up SSH
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+              env:
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
 
-      # 推送文件到服务器
-      - name: Upload build to server
-        # 这里的前面一截的目录是action build之后生成文件所在的位置, 这个目录可以通过前面build时的日志查找到.
-        # 后面一截的目录就是代表你要上传到服务器的哪个目录.
-        # 这条命令会把整个项目根目录的文件全部推送到服务器目录的/home/alice/orange中, 而不是把项目文件`orange`上传到服务器.
-        run: |
-          rsync -avz \
-            /home/runner/work/orange/orange/.output \
-            /home/runner/work/orange/orange/ecosystem.config.cjs \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/orange
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+            # 推送文件到服务器
+            - name: Upload build to server
+              # 这里的前面一截的目录是action build之后生成文件所在的位置, 这个目录可以通过前面build时的日志查找到.
+              # 后面一截的目录就是代表你要上传到服务器的哪个目录.
+              # 这条命令会把整个项目根目录的文件全部推送到服务器目录的/home/alice/orange中, 而不是把项目文件`orange`上传到服务器.
+              run: |
+                  rsync -avz \
+                    /home/runner/work/orange/orange/.output \
+                    /home/runner/work/orange/orange/ecosystem.config.cjs \
+                    ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/orange
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-  deploy:
-    runs-on: ubuntu-latest
-    name: deploy
-    needs: build
+    deploy:
+        runs-on: ubuntu-latest
+        name: deploy
+        needs: build
 
-    steps:
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+        steps:
+            - name: Set up SSH
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+              env:
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
 
-      - name: deploy on server
-        run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'ENDSSH'
+            - name: deploy on server
+              run: |
+                  ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'ENDSSH'
 
-          export PATH="/home/${{ secrets.SSH_USER }}/.nvm/versions/node/v22.19.0/bin:$PATH"
+                  export PATH="/home/${{ secrets.SSH_USER }}/.nvm/versions/node/v22.19.0/bin:$PATH"
 
-          cd /home/${{ secrets.SSH_USER }}/orange
+                  cd /home/${{ secrets.SSH_USER }}/orange
 
-          if ! /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 list | grep -q 'orange'; then
-            echo "🟢 'orange' 服务未运行，正在启动..."
-            /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 start ecosystem.config.cjs --env .env
-          else
-            echo "🟡 'orange' 服务已在运行，正在重启..."
-            /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 restart orange
-          fi
+                  if ! /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 list | grep -q 'orange'; then
+                    echo "🟢 'orange' 服务未运行，正在启动..."
+                    /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 start ecosystem.config.cjs --env .env
+                  else
+                    echo "🟡 'orange' 服务已在运行，正在重启..."
+                    /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 restart orange
+                  fi
 
-          ENDSSH
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  ENDSSH
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}

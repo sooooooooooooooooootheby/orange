@@ -1,12 +1,8 @@
 <template>
 	<div class="mb-8 px-4">
 		<div class="flex h-[calc(100vh-var(--ui-header-height)-32px)] flex-col items-center justify-center">
-			<p class="text-3xl font-bold text-gray-800 md:text-5xl dark:text-gray-200">
-				<span class="text-orange-400">O</span>rangeCraftMC
-			</p>
-			<p class="text-3xl font-bold text-gray-800 md:text-5xl dark:text-gray-200">
-				<span class="text-orange-400">橙</span>子工艺.
-			</p>
+			<p class="text-3xl font-bold text-gray-800 md:text-5xl dark:text-gray-200"><span class="text-orange-400">O</span>rangeCraftMC</p>
+			<p class="text-3xl font-bold text-gray-800 md:text-5xl dark:text-gray-200"><span class="text-orange-400">橙</span>子工艺.</p>
 			<p class="text-xs text-gray-600 md:text-lg dark:text-gray-400">一个不删档的<span>1.21.x</span>原版增强服务器!</p>
 			<NuxtLink
 				to="/docs"
@@ -18,9 +14,7 @@
 				<Icon name="gravity-ui:arrow-right" />
 			</NuxtLink>
 		</div>
-		<div
-			class="mx-auto w-[72vw] overflow-hidden rounded-lg border-1 border-gray-200 shadow-xl max-md:w-full dark:border-gray-800"
-		>
+		<div class="mx-auto w-[72vw] overflow-hidden rounded-lg border-1 border-gray-200 shadow-xl max-md:w-full dark:border-gray-800">
 			<div class="relative flex w-full items-center justify-center bg-white py-1.5 dark:bg-black">
 				<div class="absolute left-2 flex gap-1.5">
 					<div class="size-2.5 rounded-full border-1 border-red-400 bg-red-300"></div>

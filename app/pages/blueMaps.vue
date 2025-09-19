@@ -15,8 +15,8 @@
 
 				<template #body>
 					<p>如果你也想展示你心仪的作品, 那就在QQ上私聊 <code>AliceIClodia</code> 吧!</p>
-					<p class="text-gray-500 text-sm">注: 请添加 <code>AliceIClodia</code> 为好友, 说明来意, 并且将图片打包成压缩包发送.</p>
-					<br>
+					<p class="text-sm text-gray-500">注: 请添加 <code>AliceIClodia</code> 为好友, 说明来意, 并且将图片打包成压缩包发送.</p>
+					<br />
 					<p>投稿请准备一下信息</p>
 					<ul class="ml-6 list-disc text-gray-500">
 						<li>照片 (你可以多拍几张照片)</li>
@@ -55,7 +55,7 @@
 						<UCarousel v-slot="item" loop auto-height :autoplay="{ delay: 4000 }" :items="item.image" class="mx-auto">
 							<img :src="item.item" :alt="item.item" class="rounded-lg" />
 						</UCarousel>
-						<div class="flex md:w-sm shrink-0 flex-col p-4 w-full">
+						<div class="flex w-full shrink-0 flex-col p-4 md:w-sm">
 							<div class="flex-1">
 								<p class="text-2xl">{{ item.title }}</p>
 								<p class="text-gray-500">{{ item.info }}</p>

@@ -1,5 +1,5 @@
 <template>
-	<UFooter class="bg-default border-t border-default py-4">
+	<UFooter class="bg-default border-default border-t py-4">
 		<template #left>
 			<div class="flex flex-col items-center md:items-start">
 				<p class="text-muted text-sm">Copyright © {{ new Date().getFullYear() }} Orangecraftmc</p>
