@@ -43,4 +43,8 @@ export default defineNuxtConfig({
 		databaseDatabase: process.env.DB_NAME,
 		databaseCharset: process.env.DB_CHARSET,
 	},
+
+	build: {
+		transpile: ["tslib"],
+	},
 });
