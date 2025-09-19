@@ -29,5 +29,9 @@ export default defineContentConfig({
 				time: z.date(),
 			}),
 		}),
+		about: defineCollection({
+			type: "page",
+			source: "about.md",
+		}),
 	},
 });
