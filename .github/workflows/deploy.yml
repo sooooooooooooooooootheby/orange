@@ -5,7 +5,6 @@ on:
         branches: [main, master]
 
 jobs:
-    # 这里是构建 job
     build:
         runs-on: ubuntu-latest
         name: build
@@ -34,6 +33,7 @@ jobs:
             - name: Install dependencies and build
               run: |
                   pnpm install --frozen-lockfile
+                  pnpm rebuild better-sqlite3
                   pnpm run build --if-present
 
             - name: Set up SSH
