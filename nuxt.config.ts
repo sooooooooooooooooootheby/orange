@@ -1,11 +1,16 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
-	compatibilityDate: "2025-07-16",
+	compatibilityDate: "2025-07-15",
 	devtools: { enabled: true },
 
-	modules: ["@nuxt/ui", "@nuxt/eslint", "@nuxt/content", "@nuxt/icon"],
+	modules: ["@nuxt/ui", "@nuxt/icon", "@nuxt/content"],
 
 	css: ["~/assets/css/main.css"],
+
+	vite: {
+		plugins: [tailwindcss()],
+	},
 
 	app: {
 		pageTransition: { name: "page", mode: "out-in" },
@@ -24,16 +29,8 @@ export default defineNuxtConfig({
 		},
 	},
 
-	content: {
-		preview: {
-			api: "https://api.nuxt.studio",
-		},
-	},
-
-	nitro: {
-		experimental: {
-			database: true,
-		},
+	ui: {
+		fonts: false,
 	},
 
 	runtimeConfig: {
@@ -44,7 +41,9 @@ export default defineNuxtConfig({
 		databaseCharset: process.env.DB_CHARSET,
 	},
 
-	build: {
-		transpile: ["tslib"],
+	nitro: {
+		experimental: {
+			database: true,
+		},
 	},
 });

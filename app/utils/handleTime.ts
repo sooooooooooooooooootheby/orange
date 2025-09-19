@@ -1,4 +1,4 @@
-export const handleTime = (time) => {
+export const handleTime = (time: Date | number | string) => {
 	const date = new Date(time);
 
 	if (isNaN(date.getTime())) {
@@ -7,7 +7,7 @@ export const handleTime = (time) => {
 	const utcTime = date.getTime() + date.getTimezoneOffset() * 60000;
 	const beijingTime = new Date(utcTime + 3600000 * 8);
 
-	const pad = (n) => n.toString().padStart(2, "0");
+	const pad = (n: any) => n.toString().padStart(2, "0");
 
 	const yyyy = beijingTime.getUTCFullYear();
 	const mm = pad(beijingTime.getUTCMonth() + 1);

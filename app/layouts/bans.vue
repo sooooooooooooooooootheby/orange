@@ -1,5 +1,5 @@
 <template>
-	<div class="mx-auto min-h-[calc(100vh-var(--ui-header-height))] max-w-(--ui-container) py-12">
+	<div class="mx-auto min-h-[calc(100vh-var(--ui-header-height))] max-w-xl py-12">
 		<div class="mb-4 flex w-full flex-col items-center">
 			<p class="mb-2 text-4xl font-bold">封神榜</p>
 			<p>在这里你可以查看有哪些玩家被</p>

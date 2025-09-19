@@ -53,7 +53,7 @@
 				<template #content>
 					<div class="flex gap-2 p-1 max-md:flex-col">
 						<UCarousel v-slot="item" loop auto-height :autoplay="{ delay: 4000 }" :items="item.image" class="mx-auto">
-							<img :src="item.item" :alt="item" class="rounded-lg" />
+							<img :src="item.item" :alt="item.item" class="rounded-lg" />
 						</UCarousel>
 						<div class="flex md:w-sm shrink-0 flex-col p-4 w-full">
 							<div class="flex-1">
