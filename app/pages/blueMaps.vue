@@ -15,6 +15,7 @@
 
 				<template #body>
 					<p>如果你也想展示你心仪的作品, 那就在QQ上私聊 <code>AliceIClodia</code> 吧!</p>
+					<p class="text-gray-500 text-sm">注: 请添加 <code>AliceIClodia</code> 为好友, 说明来意, 并且将图片打包成压缩包发送.</p>
 					<br>
 					<p>投稿请准备一下信息</p>
 					<ul class="ml-6 list-disc text-gray-500">
@@ -81,7 +82,7 @@
 									<Icon name="gravity-ui:house" />
 									<span>地标: {{ item?.warp }}</span>
 								</div>
-								<div class="flex items-center gap-1">
+								<div class="flex items-center gap-1" v-if="item.coordinate.x !== 0 || item.coordinate.x !== 0 || item.coordinate.x !== 0">
 									<Icon name="gravity-ui:map-pin" />
 									<span>坐标: x: {{ item?.coordinate.x }}, z: {{ item?.coordinate.z }}, y: {{ item?.coordinate.y }}</span>
 								</div>
