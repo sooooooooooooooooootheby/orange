@@ -18,10 +18,12 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Setup Node.js
+            - name: Setup Node.js 23.9.0
               uses: actions/setup-node@v5
               with:
                 node-version: '23.9.0'
+                cache: 'pnpm'
+                package-manager-cache: true
 
             # 添加环境变量
             - name: set env
