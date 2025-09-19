@@ -1,97 +1,92 @@
 name: Build and Deploy
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches: [main, master]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: build
+    # 这里是构建 job
+    build:
+        # job 使用的容器环境
+        runs-on: ubuntu-latest
+        # job 的名字
+        name: build
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+        # job 的步骤
+        steps:
+            # 将 repo 的代码拿到容器中
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - name: Set up Node.js and pnpm
-        uses: pnpm/action-setup@v4
+            # 设置 node 环境和 pnpm 包管理器
+            - name: Set up Node.js and pnpm
+              uses: pnpm/action-setup@v4
 
-      - name: Install dependencies and build
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm run build --if-present
+            # 添加环境变量
+            - name: set env
+              run: |
+                  echo '${{ secrets.ENV }}' > /home/runner/work/orange/orange/.env
 
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+            # 安装依赖和 build
+            - name: Install dependencies and build
+              run: |
+                  pnpm install --frozen-lockfile
+                  pnpm run build --if-present
 
-      - name: Upload build to server
-        run: |
-          ls /home/runner/work/
-          ls /home/runner/work/orange/
-          ls /home/runner/work/orange/orange/
-          rsync -avz /home/runner/work/orange/orange/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/website/orange
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+            # 设置 ssh
+            - name: Set up SSH
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+              env:
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
 
-  deploy:
-    runs-on: ubuntu-latest
-    name: deploy
-    needs: build
+            # 推送文件到服务器
+            - name: Upload build to server
+              # 这里的前面一截的目录是action build之后生成文件所在的位置, 这个目录可以通过前面build时的日志查找到.
+              # 后面一截的目录就是代表你要上传到服务器的哪个目录.
+              # 这条命令会把整个项目根目录的文件全部推送到服务器目录的/home/alice/orange中, 而不是把项目文件`orange`上传到服务器.
+              run: |
+                  rsync -avz \
+                    /home/runner/work/orange/orange/.output \
+                    /home/runner/work/orange/orange/ecosystem.config.cjs \
+                    ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/orange
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    steps:
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+    deploy:
+        runs-on: ubuntu-latest
+        name: deploy
+        needs: build
 
-      - name: Create .env on server
-        run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p /home/website/orange && echo '${{ secrets.ENV }}' > /home/website/orange/.env"
+        steps:
+            - name: Set up SSH
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+              env:
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
 
-      - name: Execute deployment commands on server
-        run: |
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            set -e
+            - name: deploy on server
+              run: |
+                  ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'ENDSSH'
 
-            # 加载 Node 和 pnpm 路径
-            export PATH="/home/website/.nvm/versions/node/v22.19.0/bin:$PATH"
-            export PATH="/home/website/.local/share/pnpm:$PATH"
+                  export PATH="/home/${{ secrets.SSH_USER }}/.nvm/versions/node/v22.19.0/bin:$PATH"
 
-            # 进入项目目录
-            PROJECT_DIR="/home/website/orange"
-            mkdir -p "$PROJECT_DIR"
-            cd "$PROJECT_DIR"
+                  cd /home/${{ secrets.SSH_USER }}/orange
 
-            echo "📦 开始安装依赖..."
-            pnpm install --prefer-frozen-lockfile
+                  if ! /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 list | grep -q 'orange'; then
+                    echo "🟢 'orange' 服务未运行，正在启动..."
+                    /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 start ecosystem.config.cjs --env .env
+                  else
+                    echo "🟡 'orange' 服务已在运行，正在重启..."
+                    /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 restart orange
+                  fi
 
-            # 如果 better-sqlite3 已安装则 rebuild
-            if pnpm list better-sqlite3 >/dev/null 2>&1; then
-              echo "🔨 重新编译 better-sqlite3..."
-              pnpm rebuild better-sqlite3
-            fi
-
-            echo "✅ 重启 PM2 服务..."
-            if ! pm2 list | grep -q 'orange'; then
-              echo "🟢 'orange' 服务未运行，正在启动..."
-              pm2 start ecosystem.config.cjs --env production
-            else
-              echo "🟡 'orange' 服务已在运行，正在重启..."
-              pm2 restart orange
-            fi
-            pm2 save
-            echo "🎉 部署完成！"
-          EOF
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  ENDSSH
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
