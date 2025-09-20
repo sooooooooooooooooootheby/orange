@@ -12,6 +12,8 @@
 
 		<template #body>
 			<UNavigationMenu :items="appConfig.route" orientation="vertical" />
+			<USeparator class="my-4" v-if="route.path.includes('docs')" />
+			<UContentNavigation type="multiple" :navigation="appConfig.navigation" v-if="route.path.includes('docs')" />
 		</template>
 	</UHeader>
 </template>
