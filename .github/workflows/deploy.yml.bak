@@ -5,35 +5,37 @@ on:
         branches: [main, master]
 
 jobs:
-    # 这里是构建 job
     build:
-        # job 使用的容器环境
         runs-on: ubuntu-latest
-        # job 的名字
         name: build
 
-        # job 的步骤
         steps:
-            # 将 repo 的代码拿到容器中
             - name: Checkout code
               uses: actions/checkout@v4
 
-            # 设置 node 环境和 pnpm 包管理器
-            - name: Set up Node.js and pnpm
+            # 安装 pnpm
+            - name: Set up pnpm
               uses: pnpm/action-setup@v4
+              with:
+                  run_install: false
 
-            # 添加环境变量
+            # 设置 Node.js 版本
+            - name: Set up Node.js
+              uses: actions/setup-node@v5
+              with:
+                  node-version: 23.9.0
+                  cache: pnpm
+
             - name: set env
               run: |
                   echo '${{ secrets.ENV }}' > /home/runner/work/orange/orange/.env
 
-            # 安装依赖和 build
             - name: Install dependencies and build
               run: |
                   pnpm install --frozen-lockfile
+                  pnpm rebuild better-sqlite3
                   pnpm run build --if-present
 
-            # 设置 ssh
             - name: Set up SSH
               run: |
                   mkdir -p ~/.ssh
@@ -43,15 +45,13 @@ jobs:
               env:
                   SSH_HOST: ${{ secrets.SSH_HOST }}
 
-            # 推送文件到服务器
             - name: Upload build to server
-              # 这里的前面一截的目录是action build之后生成文件所在的位置, 这个目录可以通过前面build时的日志查找到.
-              # 后面一截的目录就是代表你要上传到服务器的哪个目录.
-              # 这条命令会把整个项目根目录的文件全部推送到服务器目录的/home/alice/orange中, 而不是把项目文件`orange`上传到服务器.
               run: |
                   rsync -avz \
                     /home/runner/work/orange/orange/.output \
                     /home/runner/work/orange/orange/ecosystem.config.cjs \
+                    /home/runner/work/orange/orange/pnpm-lock.yaml \
+                    /home/runner/work/orange/orange/package.json \
                     ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/orange
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -75,9 +75,12 @@ jobs:
               run: |
                   ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'ENDSSH'
 
-                  export PATH="/home/${{ secrets.SSH_USER }}/.nvm/versions/node/v22.19.0/bin:$PATH"
+                  export PATH="/home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin:$PATH"
 
                   cd /home/${{ secrets.SSH_USER }}/orange
+
+                  /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pnpm install --frozen-lockfile
+                  /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pnpm rebuild better-sqlite3
 
                   if ! /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 list | grep -q 'orange'; then
                     echo "🟢 'orange' 服务未运行，正在启动..."

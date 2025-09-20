@@ -48,10 +48,7 @@ jobs:
             - name: Upload build to server
               run: |
                   rsync -avz \
-                    /home/runner/work/orange/orange/.output \
-                    /home/runner/work/orange/orange/ecosystem.config.cjs \
-                    /home/runner/work/orange/orange/pnpm-lock.yaml \
-                    /home/runner/work/orange/orange/package.json \
+                    /home/runner/work/orange/orange/ \
                     ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/orange
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
