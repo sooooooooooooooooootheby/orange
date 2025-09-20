@@ -76,8 +76,8 @@ jobs:
 
                   cd /home/${{ secrets.SSH_USER }}/orange
 
-                  /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pnpm install --frozen-lockfile
-                  /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pnpm rebuild better-sqlite3
+                  /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm install --frozen-lockfile
+                  /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm rebuild better-sqlite3
 
                   if ! /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 list | grep -q 'orange'; then
                     echo "🟢 'orange' 服务未运行，正在启动..."
