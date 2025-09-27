@@ -18,7 +18,7 @@
 					<div class="flex w-full">
 						<div class="flex w-1/5 flex-col gap-0.5">
 							<span class="text-xs text-gray-400">评分</span>
-							<span :class="{ 'text-teal-500': index === 2, 'text-indigo-500': index === 1, 'text-rose-500': index === 0 }">{{ item.score }}</span>
+							<span :class="{ 'text-teal-500': index === 2, 'text-indigo-500': index === 1, 'text-rose-500': index === 0 }">{{ item.score.toFixed(2) }}</span>
 						</div>
 						<div class="flex w-1/5 flex-col gap-0.5">
 							<span class="text-xs text-gray-400">等级</span>
