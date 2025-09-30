@@ -79,13 +79,16 @@ jobs:
                   /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm install --frozen-lockfile
                   /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm rebuild better-sqlite3
 
-                  if ! /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 list | grep -q 'orange'; then
-                    echo "🟢 'orange' 服务未运行，正在启动..."
-                    /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 start ecosystem.config.cjs --env .env
-                  else
-                    echo "🟡 'orange' 服务已在运行，正在重启..."
-                    /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 restart orange
-                  fi
+                  # if ! /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 list | grep -q 'orange'; then
+                  #   echo "🟢 'orange' 服务未运行，正在启动..."
+                  #   /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 start ecosystem.config.cjs --env .env
+                  # else
+                  #   echo "🟡 'orange' 服务已在运行，正在重启..."
+                  #   /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 restart orange
+                  # fi
+
+                  /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 restart orange
+                  echo "🟢 'orange' 重启完成..."
 
                   ENDSSH
               env:
