@@ -75,10 +75,6 @@ export default defineAppConfig({
 			path: "#",
 			children: [
 				{
-					title: "基础指令",
-					path: "/docs/command/base",
-				},
-				{
 					title: "传送 & 家",
 					path: "/docs/command/transfer",
 				},
