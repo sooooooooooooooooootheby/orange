@@ -35,6 +35,11 @@ export default defineAppConfig({
 			path: "/docs/playing",
 		},
 		{
+			title: "抢龙活动",
+			icon: "gravity-ui:card-heart",
+			path: "/docs/dragon",
+		},
+		{
 			title: "公会",
 			icon: "gravity-ui:persons",
 			path: "/docs/guild",
