@@ -40,6 +40,11 @@ export default defineAppConfig({
 			path: "/docs/dragon",
 		},
 		{
+			title: "移动迷宫",
+			icon: "gravity-ui:card-spade",
+			path: "/docs/mazescapist",
+		},
+		{
 			title: "公会",
 			icon: "gravity-ui:persons",
 			path: "/docs/guild",
