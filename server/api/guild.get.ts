@@ -2,6 +2,7 @@ import db from "../database/db";
 
 interface GuildInfo {
 	guild_name: string;
+	description: string;
 	level: number;
 	money: number;
 	member_count: number;
@@ -42,7 +43,7 @@ export default defineEventHandler(async (event): Promise<SuccessResponse | void>
 
 	try {
 		const [rows] = await db.execute(
-			"SELECT guild_name, level, money, member_count, prosperity_degree, month_prosperity_degree, member_max_count, creator, create_time FROM guild_info"
+			"SELECT guild_name, description, level, money, member_count, prosperity_degree, month_prosperity_degree, member_max_count, creator, create_time FROM guild_info"
 		);
 
 		const guildData = rows as GuildInfo[];

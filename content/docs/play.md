@@ -14,16 +14,7 @@ icon: gravity-ui:shapes-3
 
 ### 服务器专属客户端
 
-由馒头提供制作, 可以直接前往服务器群聊的群文件下载, 或者点击下面的下载前往 123 云盘下载.
-
-::file{url="https://www.123912.com/s/iTK6Vv-zbKgh"}
-#form
-123云盘
-#filename
-OrangeCraftMC启动器.7z
-#url
-https://www.123912.com/s/iTK6Vv-zbKgh
-::
+由馒头提供制作, 可以直接前往服务器群聊的群文件下载, 或者前往[ 123 云盘](https://www.123912.com/s/iTK6Vv-zbKgh)下载.
 
 ### 菜单
 

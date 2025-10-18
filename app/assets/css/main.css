@@ -1,7 +1,9 @@
-@import "tailwindcss";
-@import "@nuxt/ui";
-@plugin "tailwindcss-pattern";
+@import "./tailwind.css";
+@import "./content-enhancer.css";
 
-* {
-	font-family: "寒蝉全圆体";
+.medium-zoom-overlay {
+    z-index: 10;
+}
+.medium-zoom-image {
+    z-index: 11;
 }

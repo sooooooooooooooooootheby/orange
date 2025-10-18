@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+body {
+	@apply bg-default;
+}
+
+/* 背景 */
+@utility bg-default {
+	@apply bg-white dark:bg-[#121212];
+}
+@utility bg-default-1 {
+	@apply bg-gray-200/50 dark:bg-gray-700/50;
+}
+
+/* 字体 */
+@utility text-default {
+	@apply dark:text-white/87 text-gray-800;
+}
+
+@utility text-default-1 {
+	@apply text-gray-700 dark:text-white/65;
+}
+
+@utility text-default-2 {
+	@apply text-gray-700 dark:text-white/30;
+}
+
+/* 边框 */
+@utility border-default {
+	@apply border-gray-200 dark:border-white/40;
+}

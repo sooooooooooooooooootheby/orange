@@ -35,16 +35,6 @@ export default defineAppConfig({
 			path: "/docs/playing",
 		},
 		{
-			title: "抢龙活动",
-			icon: "gravity-ui:card-heart",
-			path: "/docs/dragon",
-		},
-		{
-			title: "移动迷宫",
-			icon: "gravity-ui:card-spade",
-			path: "/docs/mazescapist",
-		},
-		{
 			title: "公会",
 			icon: "gravity-ui:persons",
 			path: "/docs/guild",
@@ -53,11 +43,6 @@ export default defineAppConfig({
 			title: "管理组",
 			icon: "gravity-ui:thunderbolt",
 			path: "/docs/admin",
-		},
-		{
-			title: "服务器日志",
-			icon: "gravity-ui:file",
-			path: "/docs/log",
 		},
 		{
 			title: "玩法守则",
@@ -138,56 +123,10 @@ export default defineAppConfig({
 				name: "mantou_ya",
 				role: "橙服维护管理",
 			},
+			{
+				name: "FzeroOneX",
+				role: "橙服维护管理",
+			},
 		],
-	},
-	ui: {
-		mdc: true,
-		fonts: false,
-		colors: {
-			primary: "amber",
-			neutral: "slate",
-		},
-		navigationMenu: {
-			slots: {
-				link: "py-2",
-			},
-		},
-		contentNavigation: {
-			slots: {
-				list: "mx-0",
-				link: "py-2",
-			},
-		},
-		pageAside: {
-			slots: {
-				root: "md:max-w-xl",
-			},
-		},
-		contentToc: {
-			slots: {
-				root: "px-0",
-				container: "px-4",
-				trigger: "py-0",
-			},
-		},
-		pageHeader: {
-			slots: {
-				root: "py-0",
-			},
-		},
-		prose: {
-			steps: {
-				variants: {
-					level: {
-						"4": "[&>h4]:before:size-4 [&>h4]:before:-ms-[42.5px] [&>h4]:before:mt-[5px] [&>h4]:before:content-['']",
-					},
-				},
-			},
-		},
-		banner: {
-			slots: {
-				container: "h-8",
-			},
-		},
 	},
 });

@@ -1,4 +1,4 @@
-import { defineCollection, defineContentConfig, z } from "@nuxt/content";
+import { defineContentConfig, defineCollection, z } from "@nuxt/content";
 
 export default defineContentConfig({
 	collections: {
@@ -7,6 +7,7 @@ export default defineContentConfig({
 			source: "docs/**/*.md",
 			schema: z.object({
 				isToc: z.boolean(),
+				isNew: z.boolean(),
 				title: z.string(),
 				icon: z.string(),
 			}),
@@ -28,10 +29,6 @@ export default defineContentConfig({
 				info: z.string(),
 				time: z.date(),
 			}),
-		}),
-		about: defineCollection({
-			type: "page",
-			source: "about.md",
 		}),
 	},
 });

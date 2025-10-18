@@ -8,17 +8,26 @@
 			<div v-for="(item, index) in sorting">
 				<div class="bg-default border-default flex flex-col gap-1 rounded-lg border-1 px-3 py-2">
 					<div class="flex items-center gap-2">
-						<img :src="handleHead(item.creator)" alt="item.creator" class="mb-0! w-10!" />
+						<ClientOnly>
+							<img :src="handleHead(item.creator)" alt="item.creator" class="mb-0! w-10! relative z-1" />
+						</ClientOnly>
 						<div class="flex flex-col justify-center">
 							<span v-html="toColoredHtml(item.guild_name)"></span>
 							<span class="text-sm text-gray-600"> 会长: {{ item.creator }} </span>
 						</div>
 					</div>
-					<p class="text-sm text-gray-600">{{ item.description }}</p>
+					<p class="text-sm text-gray-600 m-0!" v-if="item.description">{{ item.description }}</p>
 					<div class="flex w-full">
 						<div class="flex w-1/5 flex-col gap-0.5">
 							<span class="text-xs text-gray-400">评分</span>
-							<span :class="{ 'text-teal-500': index === 2, 'text-indigo-500': index === 1, 'text-rose-500': index === 0 }">{{ item.score.toFixed(2) }}</span>
+							<span
+								:class="{
+									'text-teal-500': index === 2,
+									'text-indigo-500': index === 1,
+									'text-rose-500': index === 0,
+								}"
+								>{{ item.score.toFixed(2) }}</span
+							>
 						</div>
 						<div class="flex w-1/5 flex-col gap-0.5">
 							<span class="text-xs text-gray-400">等级</span>

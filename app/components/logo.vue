@@ -1,6 +1,6 @@
 <template>
-	<div class="flex items-center gap-1">
-		<img src="/orange.webp" alt="orange" class="w-6" />
-		<p>OrangeCraftMC</p>
-	</div>
+    <div>
+        <img src="/orange_dark.png" alt="logo" class="dark:hidden">
+        <img src="/orange_light.png" alt="logo" class="hidden dark:flex">
+    </div>
 </template>
