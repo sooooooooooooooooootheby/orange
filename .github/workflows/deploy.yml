@@ -57,8 +57,12 @@ jobs:
 
                   cd /home/${{ secrets.SSH_USER }}/orange
 
+                  ls -la
+
                   rm -rf node_modules
                   rm -rf .output
+
+                  ls -la
 
                   /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm install --frozen-lockfile
                   /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm run build --if-present
