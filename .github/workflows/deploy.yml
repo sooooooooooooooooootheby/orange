@@ -17,12 +17,6 @@ jobs:
               run: |
                   echo '${{ secrets.ENV }}' > /home/runner/work/orange/orange/.env
 
-            - name: Install dependencies and build
-              run: |
-                  pnpm install --frozen-lockfile
-                  pnpm rebuild better-sqlite3
-                  pnpm run build --if-present
-
             - name: Set up SSH
               run: |
                   mkdir -p ~/.ssh
