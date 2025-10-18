@@ -40,4 +40,9 @@ const { data: page } = await useAsyncData(route.path, () => queryCollection("doc
 const isPath = (path: string) => {
 	return route.path === path;
 };
+
+useSeoMeta({
+	title: `${page.value?.title} | Orange Craft Mc`,
+	ogTitle: `${page.value?.title} | Orange Craft Mc`,
+});
 </script>
