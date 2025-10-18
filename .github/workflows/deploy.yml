@@ -1,4 +1,4 @@
-name: Build and Deploy
+nam:: Build and Deploy
 
 on:
     push:
@@ -57,8 +57,10 @@ jobs:
 
                   cd /home/${{ secrets.SSH_USER }}/orange
 
+                  rm -rf node_modules
+                  rm -rf .output
+
                   /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm install --frozen-lockfile
-                  /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm rebuild better-sqlite3
                   /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm run build --if-present
 
                   /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 restart orange
