@@ -13,28 +13,9 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            # 安装 pnpm
-            - name: Set up pnpm
-              uses: pnpm/action-setup@v4
-              with:
-                  run_install: false
-
-            # 设置 Node.js 版本
-            - name: Set up Node.js
-              uses: actions/setup-node@v5
-              with:
-                  node-version: 23.9.0
-                  cache: pnpm
-
             - name: set env
               run: |
                   echo '${{ secrets.ENV }}' > /home/runner/work/orange/orange/.env
-
-            - name: Install dependencies and build
-              run: |
-                  pnpm install --frozen-lockfile
-                  pnpm rebuild better-sqlite3
-                  pnpm run build --if-present
 
             - name: Set up SSH
               run: |
@@ -45,7 +26,7 @@ jobs:
               env:
                   SSH_HOST: ${{ secrets.SSH_HOST }}
 
-            - name: Upload build to server
+            - name: Upload to server
               run: |
                   rsync -avz \
                     /home/runner/work/orange/orange/ \
@@ -76,16 +57,11 @@ jobs:
 
                   cd /home/${{ secrets.SSH_USER }}/orange
 
-                  /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm install --frozen-lockfile
-                  /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin/pnpm rebuild better-sqlite3
+                  rm -rf node_modules
+                  rm -rf .output
 
-                  # if ! /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 list | grep -q 'orange'; then
-                  #   echo "🟢 'orange' 服务未运行，正在启动..."
-                  #   /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 start ecosystem.config.cjs --env .env
-                  # else
-                  #   echo "🟡 'orange' 服务已在运行，正在重启..."
-                  #   /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 restart orange
-                  # fi
+                  /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v22.19.0/bin/pnpm install
+                  /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v22.19.0/bin/pnpm run build
 
                   /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 restart orange
                   echo "🟢 'orange' 重启完成..."

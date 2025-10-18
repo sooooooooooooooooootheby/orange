@@ -53,18 +53,7 @@ jobs:
               run: |
                   ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'ENDSSH'
 
-                  export PATH="/home/${{ secrets.SSH_USER }}/.nvm/versions/node/v23.9.0/bin:$PATH"
-
-                  cd /home/${{ secrets.SSH_USER }}/orange
-
-                  rm -rf node_modules
-                  rm -rf .output
-
-                  /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v22.19.0/bin/pnpm install
-                  /home/${{ secrets.SSH_USER }}/.nvm/versions/node/v22.19.0/bin/pnpm run build
-
-                  /home/${{ secrets.SSH_USER }}/.local/share/pnpm/pm2 restart orange
-                  echo "🟢 'orange' 重启完成..."
+                  sh /home/website/update_orange.sh
 
                   ENDSSH
               env:
