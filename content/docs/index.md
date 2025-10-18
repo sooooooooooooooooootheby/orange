@@ -46,7 +46,7 @@ icon: gravity-ui:heart
 
 - CPU: R9-9950x 16核32线程
 - 内存: 128G D5 5600MHz 32\*4
-- 硬盘: 三星 990PRO 1TB
+- 硬盘: 三星 990PRO 1TB\*2
 - 主板: 华硕 Prime X670-P
 - 带宽: 100Mbps 国家 BGP 骨干网
 
