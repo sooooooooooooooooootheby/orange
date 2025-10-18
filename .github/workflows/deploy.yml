@@ -43,6 +43,7 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         name: deploy
+        needs: build
 
         steps:
             - name: Set up SSH
