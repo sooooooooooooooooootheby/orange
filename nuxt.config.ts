@@ -16,7 +16,7 @@ export default defineNuxtConfig({
 				lang: "zh_CN",
 			},
 			link: [
-				{ rel: "icon", type: "image/x-icon", href: "/orange_dark.png" },
+				{ rel: "icon", type: "image/x-icon", href: "/logo2.jpg" },
 				{
 					rel: "stylesheet",
 					href: "https://chinese-fonts-cdn.deno.dev/packages/hcqyt/dist/ChillRoundFRegular/result.css",
