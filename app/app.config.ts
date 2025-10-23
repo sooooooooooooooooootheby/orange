@@ -20,11 +20,6 @@ export default defineAppConfig({
 			path: "/docs",
 		},
 		{
-			title: "加入我们",
-			icon: "gravity-ui:plug-connection",
-			path: "/docs/join",
-		},
-		{
 			title: "玩法指南",
 			icon: "gravity-ui:shapes-3",
 			path: "/docs/play",

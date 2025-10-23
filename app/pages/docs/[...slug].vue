@@ -1,5 +1,5 @@
 <template>
-	<div class="my-18 max-md:px-4 md:max-w-6xl md:px-4 md:mx-auto md:my-16 md:flex relative">
+	<div class="my-24 max-md:px-4 md:max-w-6xl md:px-4 md:mx-auto md:my-16 md:flex relative">
 		<div class="w-48 shrink-0 pt-12 fixed max-md:hidden">
 			<ul class="text-[15px] text-default-1 flex flex-col gap-0.5">
 				<li v-for="item in appConfig.navigation" :key="item.title">
