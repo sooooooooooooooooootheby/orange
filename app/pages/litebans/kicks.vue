@@ -1,80 +1,51 @@
 <template>
 	<div>
-		<div v-if="error">
-			<Alert variant="destructive">
-				<AlertTitle>踢出列表获取失败</AlertTitle>
-				<AlertDescription>{{ error.message }}</AlertDescription>
-			</Alert>
-		</div>
-		<div v-else>
-			<div class="mb-3 flex flex-col gap-2">
-				<Input v-model="nameValue" placeholder="搜索玩家..." />
-				<Select v-model="sortValue">
-					<SelectTrigger>
-						<SelectValue placeholder="排序方式" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectGroup v-for="item in sortItems" :key="item.value">
-							<SelectItem :value="item.value"> {{ item.label }} </SelectItem>
-						</SelectGroup>
-					</SelectContent>
-				</Select>
+		<div role="alert" class="alert alert-error alert-soft" v-if="error">
+			<icon name="gravity-ui:triangle-exclamation-fill" />
+			<div>
+				<h3 class="font-bold">数据请求失败!</h3>
+				<div class="text-xs">{{ error }}</div>
 			</div>
-			<div class="flex flex-col gap-2">
-				<div v-for="item in filteredData" :key="item.uuid">
-					<div class="border-default bg-default flex flex-col gap-2 rounded-lg border-1 p-3">
-						<div class="flex gap-2">
-							<img :src="handleHead(item.name)" alt="item.name" class="size-12" />
-							<div class="w-full overflow-hidden">
-								<p class="text-lg font-bold">{{ item.name }}</p>
-								<p class="truncate text-sm text-gray-400 dark:text-gray-600">{{ item.uuid }}</p>
+		</div>
+		<div v-else-if="data" class="flex flex-col gap-2">
+			<fieldset class="fieldset">
+				<legend class="fieldset-legend">搜索玩家</legend>
+				<input type="text" class="input input-sm w-full outline-none" v-model="nameValue" placeholder="玩家 ID" />
+			</fieldset>
+			<select class="select select-sm outline-none" v-model="sortValue">
+				<option value="height">从高到低</option>
+				<option value="low">从低到高</option>
+			</select>
+			<ul class="flex flex-col gap-2">
+				<li v-for="item in filteredData">
+					<div class="card card-border bg-base-100/25 shadow-xs backdrop-blur-md">
+						<div class="card-body">
+							<div class="flex items-center gap-4">
+								<avatar :name="item.name" :alt="item.name" class="size-12" />
+								<div>
+									<p class="text-base-content font-bold">{{ item.name }}</p>
+									<p class="font-xs text-base-content/75">{{ item.uuid }}</p>
+								</div>
+							</div>
+							<div>
+								<p class="text-base-content">累计踢出次数: {{ item.kick_count }}</p>
+								<ul class="text-base-content/75 ml-5 list-disc">
+									<li v-for="items in item.kick">{{ items.reason }} x{{ items.reason_count }}</li>
+								</ul>
 							</div>
 						</div>
-						<p>
-							累计被踢出次数: <span class="font-bold">{{ item.kick_count }}</span>
-						</p>
-						<ul class="text-sm text-gray-500">
-							<li v-for="kick in item.kick" class="list-inside list-disc">
-								{{ kick.reason }} x{{ kick.reason_count }}
-							</li>
-						</ul>
 					</div>
-				</div>
-			</div>
+				</li>
+			</ul>
 		</div>
-		<Alert v-if="data?.data.length === 0">
-			<AlertTitle>还没有记录哦</AlertTitle>
-		</Alert>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import type { SuccessResponseKicks } from "~/types/litebans";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 
 const { data, error } = await useAsyncData<SuccessResponseKicks>("kicks", () => $fetch("/api/litebans/kicks"));
-
 const nameValue = ref("");
-const sortItems = ref([
-	{
-		label: "踢出次数从高到低",
-		value: "height",
-	},
-	{
-		label: "踢出次数从低到高",
-		value: "low",
-	},
-]);
 const sortValue = ref("height");
 
 const filteredData = computed(() => {
@@ -94,6 +65,6 @@ const filteredData = computed(() => {
 });
 
 definePageMeta({
-	layout: "bans",
+	layout: "litebans",
 });
 </script>

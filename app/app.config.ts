@@ -1,18 +1,4 @@
 export default defineAppConfig({
-	route: [
-		{
-			label: "服务器指北",
-			to: "/docs",
-		},
-		{
-			label: "封神榜",
-			to: "/bans",
-		},
-		{
-			label: "蓝图",
-			to: "/blueMaps",
-		},
-	],
 	navigation: [
 		{
 			title: "关于我们",
@@ -28,16 +14,6 @@ export default defineAppConfig({
 			title: "特色玩法",
 			icon: "gravity-ui:magic-wand",
 			path: "/docs/playing",
-		},
-		{
-			title: "公会",
-			icon: "gravity-ui:persons",
-			path: "/docs/guild",
-		},
-		{
-			title: "管理组",
-			icon: "gravity-ui:thunderbolt",
-			path: "/docs/admin",
 		},
 		{
 			title: "玩法守则",
@@ -74,54 +50,4 @@ export default defineAppConfig({
 			],
 		},
 	],
-	admin: {
-		fz: {
-			name: "ChengPro",
-			role: "橙服腐竹",
-		},
-		admin: [
-			{
-				name: "AliceIClodia",
-				role: "橙服技术管理",
-			},
-			{
-				name: "MinaFireVine",
-				role: "橙服技术管理",
-			},
-			{
-				name: "Ming_XiaoYu",
-				role: "橙服技术管理",
-			},
-			{
-				name: "lesfor",
-				role: "橙服技术管理",
-			},
-			{
-				name: "NicekillersCN",
-				role: "橙服技术管理",
-			},
-		],
-		lowadmin: [
-			{
-				name: "Th_Long",
-				role: "橙服维护管理",
-			},
-			{
-				name: "NAKANO666",
-				role: "橙服维护管理",
-			},
-			{
-				name: "kunkun22678",
-				role: "橙服维护管理",
-			},
-			{
-				name: "mantou_ya",
-				role: "橙服维护管理",
-			},
-			{
-				name: "FzeroOneX",
-				role: "橙服维护管理",
-			},
-		],
-	},
 });

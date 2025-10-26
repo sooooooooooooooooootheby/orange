@@ -3,25 +3,22 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
 	compatibilityDate: "2025-07-15",
 	devtools: { enabled: true },
-	css: ["~/assets/css/main.css"],
+	modules: ["@nuxt/content", "@nuxt/icon"],
 
 	vite: {
 		plugins: [tailwindcss()],
 	},
+	css: ["~/assets/main.css", "~/assets/tailwind.css"],
 
 	app: {
+		pageTransition: { name: "page", mode: "out-in" },
+		layoutTransition: { name: "layout", mode: "out-in" },
 		head: {
 			title: "Orange Craft MC",
 			htmlAttrs: {
 				lang: "zh_CN",
 			},
-			link: [
-				{ rel: "icon", type: "image/x-icon", href: "/logo2.jpg" },
-				{
-					rel: "stylesheet",
-					href: "https://chinese-fonts-cdn.deno.dev/packages/hcqyt/dist/ChillRoundFRegular/result.css",
-				},
-			],
+			link: [{ rel: "icon", type: "image/x-icon", href: "/logo.jpg" }],
 		},
 	},
 
@@ -33,21 +30,9 @@ export default defineNuxtConfig({
 		databaseCharset: process.env.DB_CHARSET,
 	},
 
-	nitro: {
-		experimental: {
-			database: true,
+	content: {
+		preview: {
+			api: "https://api.nuxt.studio",
 		},
-	},
-
-	modules: ["shadcn-nuxt", "@nuxt/icon", "@nuxt/content", "@nuxtjs/color-mode"],
-
-	shadcn: {
-		prefix: "",
-		componentDir: "./components/ui",
-	},
-
-	colorMode: {
-		classPrefix: "",
-		classSuffix: "",
 	},
 });

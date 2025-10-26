@@ -1,48 +1,59 @@
 <template>
-	<div class="my-24 max-md:px-4 md:max-w-6xl md:px-4 md:mx-auto md:my-16 md:flex relative">
-		<div class="w-48 shrink-0 pt-12 fixed max-md:hidden">
-			<ul class="text-[15px] text-default-1 flex flex-col gap-0.5">
-				<li v-for="item in appConfig.navigation" :key="item.title">
-					<NuxtLink
-						:to="item.path"
-						class="flex items-center gap-1 hover:bg-default-1 py-1 px-2 rounded-md"
-						:class="{ 'text-[#FccA96]': isPath(item.path) }"
-					>
-						<Icon :name="item.icon" />{{ item.title }}
-					</NuxtLink>
-					<ul v-if="item.children" class="ml-5 flex flex-col gap-0.5">
-						<li v-for="items in item.children">
-							<NuxtLink
-								:to="items.path"
-								class="flex items-center gap-1 hover:bg-default-1 py-1 px-2 rounded-md"
-								:class="{ 'text-[#FccA96]': isPath(items.path) }"
-							>
-								<Icon :name="item.icon" />{{ items.title }}
-							</NuxtLink>
+	<div class="flex w-full" v-if="content">
+		<div class="prose w-full max-w-full md:pr-6">
+			<div class="text-base-content border-base-content/10 border-b pt-8">
+				<icon :name="content.icon" class="mb-2 text-6xl" />
+				<h1>{{ content.title }}</h1>
+				<p class="text-base-content/75">{{ content.introduction }}</p>
+			</div>
+			<div class="w-full pt-12 text-gray-500 md:hidden" v-if="content.body && content.body.toc && content.body.toc.links.length >= 2">
+				<div>
+					<div class="mb-1 flex items-center gap-1">
+						<icon name="gravity-ui:list-ul" />
+						<span class="text-sm font-bold">On This Page</span>
+					</div>
+					<div class="flex text-sm">
+						<div class="border-base-content/10 mx-2 border-l-2"></div>
+						<ul class="m-0! flex list-none flex-col gap-2 p-0">
+							<li v-for="item in content.body.toc.links">
+								<NuxtLink :to="`#${item.id}`" class="no-underline">{{ item.text }}</NuxtLink>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<ContentRenderer :value="content" class="w-full max-w-full" />
+		</div>
+		<div class="relative w-70 shrink-0 pt-12 text-gray-500 max-md:hidden" v-if="content.body && content.body.toc && content.body.toc.links.length >= 2">
+			<div class="fixed">
+				<div class="mb-2 flex items-center gap-1">
+					<icon name="gravity-ui:list-ul" />
+					<p class="text-sm font-bold">On This Page</p>
+				</div>
+				<div class="flex text-sm">
+					<div class="border-base-content/10 mx-2 border-l-2"></div>
+					<ul class="flex flex-col gap-2">
+						<li v-for="item in content.body.toc.links">
+							<NuxtLink :to="`#${item.id}`">{{ item.text }}</NuxtLink>
 						</li>
 					</ul>
-				</li>
-			</ul>
-		</div>
-		<div class="w-48 h-12 shrink-0 max-md:hidden"></div>
-		<div class="enhancer px-4">
-			<ContentRenderer v-if="page" :value="page" />
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
 const route = useRoute();
-const appConfig = useAppConfig();
 
-const { data: page } = await useAsyncData(route.path, () => queryCollection("docs").path(route.path).first());
+const { data: content } = await useAsyncData(route.path, () => queryCollection("docs").path(route.path).first());
 
-const isPath = (path: string) => {
-	return route.path === path;
-};
+definePageMeta({
+	layout: "docs",
+});
 
 useSeoMeta({
-	title: `${page.value?.title} | Orange Craft Mc`,
-	ogTitle: `${page.value?.title} | Orange Craft Mc`,
+	title: `${content.value?.title} | Orange Craft Mc`,
+	ogTitle: `${content.value?.title} | Orange Craft Mc`,
 });
 </script>

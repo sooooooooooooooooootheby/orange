@@ -1,108 +1,57 @@
 <template>
 	<div>
-		<div v-if="error">
-			<Alert variant="destructive">
-				<AlertTitle>禁言列表获取失败</AlertTitle>
-				<AlertDescription>{{ error.message }}</AlertDescription>
-			</Alert>
+		<div role="alert" class="alert alert-error alert-soft" v-if="error">
+			<icon name="gravity-ui:triangle-exclamation-fill" />
+			<div>
+				<h3 class="font-bold">数据请求失败!</h3>
+				<div class="text-xs">{{ error }}</div>
+			</div>
 		</div>
-		<div v-else>
-			<div class="flex flex-col gap-2">
-				<div v-for="item in data?.data" :key="item.uuid + '-' + item.time">
-					<div class="border-default bg-default flex flex-col gap-2 rounded-lg border-1 p-3">
-						<div class="flex gap-2">
-							<img :src="handleHead(item.name)" alt="item.name" class="size-12" />
-							<div class="w-full overflow-hidden">
-								<p class="text-lg font-bold">{{ item.name }}</p>
-								<p class="truncate text-sm text-gray-400 dark:text-gray-600">{{ item.uuid }}</p>
+		<ul v-else-if="data" class="flex flex-col gap-2">
+			<li v-for="item in data.data">
+				<div class="card card-border bg-base-100/25 shadow-xs backdrop-blur-md">
+					<div class="card-body">
+						<div class="flex items-center gap-4">
+							<avatar :name="item.name" :alt="item.name" class="size-12" />
+							<div>
+								<p class="text-base-content font-bold">{{ item.name }}</p>
+								<p class="font-xs text-base-content/75">{{ item.uuid }}</p>
 							</div>
 						</div>
-						<div class="flex flex-col gap-1">
-							<div class="flex gap-1">
-								<img :src="handleHead(item.banned_by_name)" alt="item.name" class="size-6" />
-								<span>{{ item.banned_by_name }}</span>
+						<div class="flex items-center gap-1">
+							<avatar :name="item.banned_by_name" :alt="item.name" fallback="Console" class="size-8" />
+							<span class="text-base-content font-bold">
+								{{ item.banned_by_name }} -
+								<NuxtTime locale="zh-CN" year="numeric" month="long" day="numeric" hour="2-digit" minute="2-digit" :datetime="item.time" />
+							</span>
+						</div>
+						<p class="text-base-content text-sm">{{ item.reason }}</p>
+						<div class="mt-2 flex items-center gap-1">
+							<div class="badge badge-soft badge-sm badge-error" v-if="item.until === 0">永久封禁</div>
+							<div class="badge badge-soft badge-sm badge-error" :class="{ 'badge-success': Date.now() - item.until >= 0 }" v-else>
+								{{ formatTimeRemaining(item.time, item.until) }}
 							</div>
-							<p class="text-sm text-gray-400 dark:text-gray-600">{{ item.reason }}</p>
-							<div class="mt-2 flex items-center gap-1">
-								<Badge
-									icon="gravity-ui:clock"
-									size="md"
-									color="success"
-									variant="soft"
-									class="rounded-full"
-									v-if="!item.removed_by_date"
-								>
-									{{ handleTime(item.until) }}
-								</Badge>
-								<Badge
-									icon="gravity-ui:clock"
-									size="md"
-									variant="destructive"
-									class="rounded-full"
-									v-if="isBan(item.removed_by_date, item.until)"
-								>
-									永久禁言
-								</Badge>
-								<Badge
-									icon="gravity-ui:ban"
-									size="md"
-									variant="destructive"
-									class="rounded-full"
-									v-if="isBan(item.removed_by_date, item.until)"
-								>
-									禁言中
-								</Badge>
-								<Badge
-									icon="gravity-ui:circle-check"
-									size="md"
-									color="success"
-									variant="soft"
-									class="rounded-full"
-									v-else
-								>
-									已解禁
-								</Badge>
-								<Badge
-									color="error"
-									variant="outline"
-									size="md"
-									class="rounded-full"
-									v-if="item.ipban.data[0] !== 0"
-									>Ban IP</Badge
-								>
+							<div
+								class="badge badge-soft badge-sm badge-error"
+								:class="{ 'badge-success': item.until !== 0 && Date.now() - item.until >= 0 }"
+								v-if="item.ipban.data[0] === 1"
+							>
+								Ban IP
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<Alert v-if="data?.data.length === 0">
-			<AlertTitle>还没有记录哦</AlertTitle>
-		</Alert>
+			</li>
+		</ul>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import type { SuccessResponseA } from "~/types/litebans";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
 
 const { data, error } = await useAsyncData<SuccessResponseA>("mutes", () => $fetch("/api/litebans/mutes"));
 
-const isBan = (removed_by_date: Date | null, until: number): boolean => {
-	if (removed_by_date) {
-		return false;
-	}
-	if (until !== 0) {
-		const now = new Date().getTime();
-		if (now > until) {
-			return false;
-		}
-	}
-	return true;
-};
-
 definePageMeta({
-	layout: "bans",
+	layout: "litebans",
 });
 </script>

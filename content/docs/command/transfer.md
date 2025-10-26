@@ -1,10 +1,7 @@
 ---
-isToc: false
-title: 传送 & 家
 icon: gravity-ui:terminal
+title: 传送 & 家
 ---
-
-## 传送 & 家
 
 `/spawn` 传送至主城
 

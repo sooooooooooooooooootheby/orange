@@ -4,7 +4,7 @@ import { defineNuxtPlugin } from "#app";
 import mediumZoom from "medium-zoom";
 
 export default defineNuxtPlugin((nuxtApp) => {
-	const selector = ".enhancer img";
+	const selector = ".prose img";
 
 	let zoomInstance = mediumZoom(selector, {
 		margin: 24,

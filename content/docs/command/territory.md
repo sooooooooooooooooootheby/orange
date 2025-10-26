@@ -1,10 +1,7 @@
 ---
-isToc: false
-title: 领地
 icon: gravity-ui:terminal
+title: 领地
 ---
-
-## 领地
 
 `/res` 游戏内查看领地指令帮助
 

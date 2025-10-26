@@ -1,10 +1,7 @@
 ---
-isToc: false
-title: 全服音乐
 icon: gravity-ui:terminal
+title: 全服音乐
 ---
-
-## 全服音乐
 
 `/music [音乐ID/网易云分享链接]` 点歌
 
