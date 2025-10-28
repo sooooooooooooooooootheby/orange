@@ -73,5 +73,18 @@
 </template>
 
 <script lang="ts" setup>
+import { toast } from "vue-sonner";
+import "vue-sonner/style.css";
+
 const { data } = await useAsyncData("index", () => queryCollection("index").first());
+
+onMounted(() => {
+	toast("龙之庆典争夺时: 迷域回廊", {
+		description: "新的抢龙活动即将开启",
+		action: {
+			label: "前往",
+			onClick: () => navigateTo("docs/dragon"),
+		},
+	});
+});
 </script>

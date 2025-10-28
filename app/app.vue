@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<Toaster />
 		<NuxtRouteAnnouncer />
 		<NuxtLoadingIndicator color="#F8BE82" />
 		<NuxtLayout>
@@ -10,6 +11,8 @@
 </template>
 
 <script lang="ts" setup>
+import { Toaster } from "@/components/ui/sonner";
+
 onMounted(() => {
 	console.log(
 		`\n 你在找什么?\n \n %c GITHUB %c https://github.com/sooooooooooooooooootheby/orange \n\n%c 记得给我点个star⭐ ฅ^•ﻌ•^ฅ`,
