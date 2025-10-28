@@ -1,6 +1,9 @@
 ---
 icon: gravity-ui:terminal
 title: 传送 & 家
+order: 70
+isHide: false
+isHot: false
 ---
 
 `/spawn` 传送至主城

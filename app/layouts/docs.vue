@@ -27,20 +27,24 @@
 					<button class="btn btn-sm" @click="navigateTo('/')"><icon name="gravity-ui:house" />回到首页</button>
 				</div>
 				<ul class="menu w-full grow">
-					<li v-for="item in appConfig.navigation" :key="item.title">
+					<li v-for="item in navigation?.[0]?.children" :key="item.title">
 						<details open v-if="item.children">
 							<summary>{{ item.title }}</summary>
 							<ul>
-								<li v-for="children in item.children">
-									<NuxtLink :to="children.path" class="is-drawer-close:hidden" :class="{ 'menu-active': children.path === route.path }">{{
-										children.title
-									}}</NuxtLink>
-								</li>
+								<template v-for="child in item.children" :key="child.path">
+									<li v-if="!child.isHide" class="relative">
+										<NuxtLink :to="child.path" class="is-drawer-close:hidden" :class="{ 'menu-active': child.path === route.path }">
+											{{ child.title }}
+										</NuxtLink>
+										<span class="absolute -right-1 -top-1 h-2 w-2 bg-rose-600 p-0 rounded-full" v-if="child.isHot"></span>
+									</li>
+								</template>
 							</ul>
 						</details>
-						<button class="is-drawer-close:tooltip is-drawer-close:tooltip-right" :class="{ 'menu-active': item.path === route.path }" :data-tip="item.title" v-else>
-							<icon :name="item.icon" class="my-1.5 inline-block size-4" />
+						<button class="is-drawer-close:tooltip is-drawer-close:tooltip-right relative" :class="{ 'menu-active': item.path === route.path }" :data-tip="item.title" v-else>
+							<icon :name="String(item.icon ?? '')" class="my-1.5 inline-block size-4" />
 							<NuxtLink :to="item.path" class="is-drawer-close:hidden">{{ item.title }}</NuxtLink>
+							<span class="absolute -right-1 -top-1 h-2 w-2 bg-rose-600 p-0 rounded-full" v-if="item.isHot"></span>
 						</button>
 					</li>
 				</ul>
@@ -55,5 +59,9 @@ const route = useRoute();
 
 const breadcrumbs = computed<string[]>(() => {
 	return route.path.split("/").filter(Boolean);
+});
+
+const { data: navigation } = await useAsyncData("navigation", () => {
+	return queryCollectionNavigation("docs", ["order", "icon", "isHide", "isHot"]).order("order", "ASC");
 });
 </script>

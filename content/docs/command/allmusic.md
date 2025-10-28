@@ -1,6 +1,9 @@
 ---
 icon: gravity-ui:terminal
 title: 全服音乐
+order: 70
+isHide: false
+isHot: false
 ---
 
 `/music [音乐ID/网易云分享链接]` 点歌

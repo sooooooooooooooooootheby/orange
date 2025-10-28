@@ -1,7 +1,10 @@
 ---
 icon: gravity-ui:card-heart
-title: 《龙之庆典争夺时：迷域回廊》橙服大型版本活动详情
+title: 龙之庆典争夺时：迷域回廊
 introduction: 橙服规格最高的大型活动！奖励多多～快来看看如何参加吧！
+order: 4
+isHide: false
+isHot: true
 ---
 
 活动将于 `（待定）` 开启

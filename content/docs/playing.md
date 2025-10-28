@@ -2,6 +2,9 @@
 icon: gravity-ui:magic-wand
 title: 特色玩法
 introduction: 服务器添加了一些有趣的功能, 这里的内容可以告诉你如何使用它们.
+order: 3
+isHide: false
+isHot: false
 ---
 
 ## 全服音乐

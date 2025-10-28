@@ -1,6 +1,9 @@
 ---
 icon: gravity-ui:terminal
 title: 领地
+order: 70
+isHide: false
+isHot: false
 ---
 
 `/res` 游戏内查看领地指令帮助

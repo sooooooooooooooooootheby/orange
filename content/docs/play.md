@@ -2,6 +2,9 @@
 icon: gravity-ui:shapes-3
 title: 玩法指南
 introduction: 不知道进来怎么玩? 不知道服务器有哪些功能? 这里的内容可以帮助你快速熟悉服务器.
+order: 1
+isHide: false
+isHot: false
 ---
 
 ## 服务器专属客户端
