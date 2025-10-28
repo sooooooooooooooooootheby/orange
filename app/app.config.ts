@@ -15,6 +15,11 @@ export default defineAppConfig({
 			icon: "gravity-ui:magic-wand",
 			path: "/docs/playing",
 		},
+  {
+			title: "抢龙活动",
+			icon: "gravity-ui:card-heart",
+			path: "/docs/dragon",
+		},
 		{
 			title: "玩法守则",
 			icon: "gravity-ui:pencil",
