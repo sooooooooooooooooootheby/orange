@@ -7,9 +7,9 @@ isHide: false
 isHot: true
 ---
 
-活动将于 `2025.11.1 20:00` ****开启
+活动将于 `2025.11.1 20:00` 准时开启开启
 
-活动前瞻PV: https\://www\.bilibili.com/video/BV1DHyWBhEsF?vd\_source=3e4044d9e36074c3bfdfc2bf6ca7ee1d
+活动前瞻PV: <https://www.bilibili.com/video/BV1DHyWBhEsF?vd_source=3e4044d9e36074c3bfdfc2bf6ca7ee1d>
 
 (本次活动服为全新子服, 和生存服数据不互通)
 
