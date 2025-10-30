@@ -63,19 +63,35 @@ isHot: true
 
 ## **制式券说明**
 
+制式券需要在生存服 -> 菜单 -> 欧润吉商店 -> 制式券 购买
+
+进入抢龙服后使用命令 `/zsq` 获取.
+
 制式券为 7800 欧一个, 三种制式券一次只能买一种, 活动全程限购一次, 谨慎选择.
 
 均衡
 
 ![](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/dragon/1.webp)
 
+3瓶 00:45 恢复药水
+
+3瓶 03:00 迅捷药水(+20%速度)
+
 生存
 
 ![](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/dragon/2.webp)
 
+4瓶 00:45 恢复药水
+
+2瓶 03:00 迅捷药水(+20%速度)
+
 火力
 
 ![](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/dragon/3.webp)
+
+3瓶 03:00 力量药水(+3伤害)
+
+3瓶 00:45 恢复药水
 
 ## **抢龙活动创作者激励计划**
 
