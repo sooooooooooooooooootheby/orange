@@ -1,15 +1,8 @@
-// utils/mcFormat.js  —— ESM 导出
-// 用法：import { toColoredHtml } from '~/utils/mcFormat'
-//       const html = toColoredHtml(input)  // 然后 v-html 渲染
-
 export function toColoredHtml(input) {
 	if (typeof input !== "string" || !input) return "";
 
-	// 预备：字素切分（优先使用 Intl.Segmenter，回退到简单切分）
 	const segmenter = typeof Intl !== "undefined" && Intl.Segmenter ? new Intl.Segmenter(undefined, { granularity: "grapheme" }) : null;
 
-	// 为了在主循环中按原始索引读取“下一个字素”，
-	// 我们先把整串分段，建立 index -> grapheme 的映射。
 	const graphemes = [];
 	const indexToGrapheme = new Map();
 	if (segmenter) {
@@ -19,7 +12,6 @@ export function toColoredHtml(input) {
 			indexToGrapheme.set(s.index, s.segment);
 		}
 	} else {
-		// 回退：并不完美，但尽量保证 emoji 基本不被破坏
 		let i = 0;
 		for (const cp of Array.from(input)) {
 			indexToGrapheme.set(i, cp);
@@ -28,23 +20,17 @@ export function toColoredHtml(input) {
 		}
 	}
 
-	// 状态（持续生效）
-	let color = null; // '#rrggbb' or null
+	let color = null;
 	let bold = false;
 	let italic = false;
 	let underline = false;
 	let strike = false;
 
-	// 单次颜色（仅应用到下一个字素）
 	let nextOnceColor = null;
-
-	// HTML 片段累积
 	const out = [];
 
-	// 转义
 	const esc = (s) => s.replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
 
-	// 生成当前样式的 style 字符串
 	const styleOf = (c) => {
 		const styles = [];
 		if (c) styles.push(`color:${c}`);
@@ -57,35 +43,53 @@ export function toColoredHtml(input) {
 		return styles.length ? ` style="${styles.join(";")}"` : "";
 	};
 
-	// 读取 hex
 	const isHex = (ch) => /^[0-9a-fA-F]$/.test(ch);
+	const isCtrl = (c) => c === "&" || c === "§";
 
-	// 主循环用原始字符串索引推进
+	// ★ 新增：原版16色表
+	const mcColors = {
+		0: "#000000",
+		1: "#0000aa",
+		2: "#00aa00",
+		3: "#00aaaa",
+		4: "#aa0000",
+		5: "#aa00aa",
+		6: "#ffaa00",
+		7: "#aaaaaa",
+		8: "#555555",
+		9: "#5555ff",
+		a: "#55ff55",
+		b: "#55ffff",
+		c: "#ff5555",
+		d: "#ff55ff",
+		e: "#ffff55",
+		f: "#ffffff",
+	};
+
 	let i = 0;
 	const len = input.length;
 
 	while (i < len) {
 		const ch = input[i];
 
-		// 1) &#rrggbb（一次性颜色：仅下一个字素）
-		if (ch === "&" && i + 8 <= len && input[i + 1] === "#") {
+		// # 一次性 RGB: &#rrggbb
+		if (isCtrl(ch) && i + 8 <= len && input[i + 1] === "#") {
 			const hex = input.slice(i + 2, i + 8);
 			if (/^[0-9a-fA-F]{6}$/.test(hex)) {
 				nextOnceColor = `#${hex.toLowerCase()}`;
 				i += 8;
-				continue; // 不输出任何字符
+				continue;
 			}
 		}
 
-		// 2) &x&h&h&h&h&h&h（持续颜色）
-		if (ch === "&" && i + 14 <= len && input[i + 1] === "x") {
-			// 期望 &x 后有 6 组 (& + hex)
+		// # 持续 RGB: &x&h&h&h&h&h&h
+		if (isCtrl(ch) && i + 14 <= len && input[i + 1] === "x") {
 			let ok = true;
 			let hex = "";
 			for (let k = 0; k < 6; k++) {
-				const amp = input[i + 2 + k * 2];
+				const ctrl = input[i + 2 + k * 2];
 				const hd = input[i + 3 + k * 2];
-				if (amp !== "&" || !isHex(hd)) {
+				if (!isCtrl(ctrl) || !isHex(hd)) {
 					ok = false;
 					break;
 				}
@@ -98,43 +102,37 @@ export function toColoredHtml(input) {
 			}
 		}
 
-		// 3) 样式/重置控制码（&l &o &n &m &r）
-		if (ch === "&" && i + 1 < len) {
+		// # 样式 + ★ 原版颜色码
+		if (isCtrl(ch) && i + 1 < len) {
 			const code = input[i + 1].toLowerCase();
-			if (["l", "o", "n", "m", "r"].includes(code)) {
-				if (code === "r") {
-					color = null;
-					bold = italic = underline = strike = false;
-				} else if (code === "l") bold = true;
-				else if (code === "o") italic = true;
-				else if (code === "n") underline = true;
-				else if (code === "m") strike = true;
+
+			if (mcColors[code]) {
+				color = mcColors[code];
 				i += 2;
 				continue;
 			}
-		}
+			if (code === "r") {
+				color = null;
+				bold = italic = underline = strike = false;
+				i += 2;
+				continue;
+			}
+			if (code === "l") bold = true;
+			else if (code === "o") italic = true;
+			else if (code === "n") underline = true;
+			else if (code === "m") strike = true;
 
-		// 4) 普通字素：从 indexToGrapheme 取“下一个完整字素”
-		const g = indexToGrapheme.get(i);
-		if (g == null) {
-			// 保险：若当前位置不是字素起点，当普通字符处理（极少见）
-			const safeChar = esc(input[i]);
-			out.push(`<span${styleOf(color)}>${safeChar}</span>`);
-			i += 1;
-			// 清理一次性颜色（如果它本应应用到这个误差字符，则也清掉）
-			nextOnceColor = null;
+			i += 2;
 			continue;
 		}
 
-		// 应用颜色（一次性优先于持续）
+		const g = indexToGrapheme.get(i);
 		const appliedColor = nextOnceColor || color;
 		nextOnceColor = null;
 
-		const safeG = esc(g);
-		out.push(`<span${styleOf(appliedColor)}>${safeG}</span>`);
-		i += g.length;
+		out.push(`<span${styleOf(appliedColor)}>${esc(g || input[i])}</span>`);
+		i += g ? g.length : 1;
 	}
 
-	// 你也可以包一层 class，方便定制字体/行高
 	return `<span class="mc-colored">${out.join("")}</span>`;
 }
