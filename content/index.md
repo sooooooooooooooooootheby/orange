@@ -1,8 +1,8 @@
 ::accordion
-  ::accordioncontent
+  :::accordioncontent
   #title
   在 OrangeCraft 你可以体验到...
-
+  
   #content
   - 突破原版极限的强化附魔, 全程可免费获取
   - 公会集结, 携手并肩共筑属于你的文明
@@ -12,5 +12,5 @@
   - 每月限定活动「抢龙挑战」——智与勇的巅峰对决!
     \::
     \::
-  ::
+  :::
 ::
