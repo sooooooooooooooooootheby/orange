@@ -41,7 +41,7 @@
 								</template>
 							</ul>
 						</details>
-						<button class="is-drawer-close:tooltip is-drawer-close:tooltip-right relative" :class="{ 'menu-active': item.path === route.path }" :data-tip="item.title" v-else>
+						<button class="is-drawer-close:tooltip is-drawer-close:tooltip-right relative" :class="{ 'menu-active': item.path === route.path }" :data-tip="item.title" v-else-if="!item.isHide">
 							<icon :name="String(item.icon ?? '')" class="my-1.5 inline-block size-4" />
 							<NuxtLink :to="item.path" class="is-drawer-close:hidden">{{ item.title }}</NuxtLink>
 							<span class="absolute -right-1 -top-1 h-2 w-2 bg-rose-600 p-0 rounded-full" v-if="item.isHot"></span>
