@@ -41,8 +41,32 @@
 			</div>
 
 			<ContentRenderer v-if="data" :value="data" class="prose max-w-full" />
+
+			<div v-if="server">
+				<p class="mb-8 text-center text-2xl font-bold">服务器运行状态</p>
+				<div class="bg-base-100 rounded-lg border border-gray-200 p-6">
+					<div class="mb-4 text-lg flex items-center gap-2">
+						<div class="bg-success size-2 rounded-full" :class="{ 'bg-error!': !server.online }"></div>
+						<span>游戏服务器</span>
+					</div>
+					<div class="mb-2 flex gap-2">
+						<img :src="server.icon" :alt="server.host" class="rounded-lg" />
+						<div class="flex flex-col">
+							<span class="text-lg">{{ server.host }}</span>
+							<span class="text-sm" v-html="formattedText"></span>
+						</div>
+					</div>
+					<div class="stats">
+						<div class="stat px-0">
+							<div class="stat-title">当前在线玩家</div>
+							<div class="stat-value text-success">{{ server.players.online }}</div>
+							<div class="stat-desc">玩家上限: {{ server.players.max }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<footer class="footer sm:footer-horizontal bg-base-200 text-base-content p-10">
+		<footer class="footer sm:footer-horizontal bg-base-200 text-base-content mt-12 p-10">
 			<aside>
 				<img src="/logo.jpg" alt="logo" class="w-16" />
 				<p>
@@ -77,4 +101,55 @@ import { toast } from "vue-sonner";
 import "vue-sonner/style.css";
 
 const { data } = await useAsyncData("index", () => queryCollection("index").first());
+
+interface MinecraftServerStatus {
+	online: boolean;
+	host: string;
+	port: number;
+	ip_address: string;
+	eula_blocked: boolean;
+	retrieved_at: number;
+	expires_at: number;
+	srv_record: null | {
+		host: string;
+		port: number;
+	};
+	version: {
+		name_raw: string;
+		name_clean: string;
+		name_html: string;
+		protocol: number;
+	};
+	players: {
+		online: number;
+		max: number;
+		list: Array<{
+			uuid: string;
+			name_raw: string;
+			name_clean: string;
+			name_html: string;
+		}>;
+	};
+	motd: {
+		raw: string;
+		clean: string;
+		html: string;
+	};
+	icon: string;
+	mods: Array<{
+		name: string;
+		version: string;
+	}>;
+	software: null | string;
+	plugins: Array<{
+		name: string;
+		version: string;
+	}>;
+}
+
+const { data: server } = await useFetch<MinecraftServerStatus>("https://api.mcstatus.io/v2/status/java/orangecraftmc.com");
+
+const formattedText = computed(() => {
+	return server.value?.motd.clean.replace(/\n/g, "<br>");
+});
 </script>
