@@ -19,6 +19,9 @@
 						<button class="btn btn-sm btn-neutral mt-4">
 							<NuxtLink to="/guild" class="flex items-center">公会</NuxtLink>
 						</button>
+						<button class="btn btn-sm btn-neutral mt-4">
+							<NuxtLink to="/server" class="flex items-center">服务器状态</NuxtLink>
+						</button>
 						<!-- <button class="btn btn-sm btn-neutral mt-4">
 							<NuxtLink to="/logs" class="flex items-center">服务器日志</NuxtLink>
 						</button> -->
@@ -43,9 +46,9 @@
 			<ContentRenderer v-if="data" :value="data" class="prose max-w-full" />
 
 			<div v-if="server">
-				<p class="mb-8 text-center text-2xl font-bold text-base-content">服务器运行状态</p>
-				<div class="bg-base-100 rounded-lg border border-base-content/10 p-6">
-					<div class="mb-4 text-lg flex items-center gap-2">
+				<p class="text-base-content mb-8 text-center text-2xl font-bold">服务器运行状态</p>
+				<div class="bg-base-100 border-base-content/10 rounded-lg border p-6">
+					<div class="mb-4 flex items-center gap-2 text-lg">
 						<div class="bg-success size-2 rounded-full" :class="{ 'bg-error!': !server.online }"></div>
 						<span>游戏服务器</span>
 					</div>
@@ -63,6 +66,22 @@
 							<div class="stat-desc">玩家上限: {{ server.players.max }}</div>
 						</div>
 					</div>
+					<ClientOnly>
+						<div>
+							<div class="flex items-center justify-between">
+								<span>CPU 使用率</span>
+								<span>{{ serverInfo.cpu?.currentLoad.toFixed(1) }}%</span>
+							</div>
+							<cprogress :usage="serverInfo.cpu?.currentLoad"></cprogress>
+						</div>
+						<div>
+							<div class="flex items-center justify-between">
+								<span>内存使用率</span>
+								<span>{{ serverInfo.memory?.usage.toFixed(1) }}%</span>
+							</div>
+							<cprogress :usage="serverInfo.memory?.usage"></cprogress>
+						</div>
+					</ClientOnly>
 				</div>
 			</div>
 		</div>
@@ -82,6 +101,7 @@
 				<NuxtLink to="docs" class="link link-hover">服务器指北</NuxtLink>
 				<NuxtLink to="/litebans" class="link link-hover">小黑屋</NuxtLink>
 				<NuxtLink to="/guild" class="link link-hover">公会</NuxtLink>
+				<NuxtLink to="/server" class="link link-hover">服务器状态</NuxtLink>
 				<!-- <NuxtLink to="/logs" class="link link-hover">服务器日志</NuxtLink> -->
 			</nav>
 			<nav>
@@ -99,6 +119,7 @@
 <script lang="ts" setup>
 import { toast } from "vue-sonner";
 import "vue-sonner/style.css";
+import Cprogress from "~/components/cprogress.vue";
 
 const { data } = await useAsyncData("index", () => queryCollection("index").first());
 
@@ -151,5 +172,15 @@ const { data: server } = await useFetch<MinecraftServerStatus>("https://api.mcst
 
 const formattedText = computed(() => {
 	return server.value?.motd.clean.replace(/\n/g, "<br>");
+});
+
+const serverInfo = ref({});
+
+onMounted(() => {
+	const { $socket } = useNuxtApp() as any;
+
+	$socket.on("server", (data: any) => {
+		serverInfo.value = data;
+	});
 });
 </script>
