@@ -1,5 +1,5 @@
 <template>
-	<div class="pattern-dots-md text-base-content/10 bg-base-100 h-auto w-full pt-28">
+	<div class="pt-28">
 		<div class="mx-auto flex min-h-screen max-w-4xl flex-col gap-20 text-gray-600 max-md:px-4">
 			<div class="flex flex-col items-center justify-center gap-12">
 				<div class="flex items-center gap-2">
@@ -47,7 +47,7 @@
 
 			<div v-if="server">
 				<p class="text-base-content mb-8 text-center text-2xl font-bold">服务器运行状态</p>
-				<div class="bg-base-100 border-base-content/10 rounded-lg border p-6">
+				<div class="border-base-content/10 bg-base-100/25 text-base-content rounded-lg border p-6 shadow-xs backdrop-blur-md">
 					<div class="mb-4 flex items-center gap-2 text-lg">
 						<div class="bg-success size-2 rounded-full" :class="{ 'bg-error!': !server.online }"></div>
 						<span>游戏服务器</span>

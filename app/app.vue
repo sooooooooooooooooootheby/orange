@@ -3,10 +3,13 @@
 		<Toaster />
 		<NuxtRouteAnnouncer />
 		<NuxtLoadingIndicator color="#F8BE82" />
-		<NuxtLayout>
-			<theme />
-			<NuxtPage />
-		</NuxtLayout>
+		<div class="pattern-checks-xl text-base-content/4 fixed z-1 min-h-screen w-full"></div>
+		<div class="relative z-2">
+			<NuxtLayout>
+				<theme />
+				<NuxtPage />
+			</NuxtLayout>
+		</div>
 	</div>
 </template>
 

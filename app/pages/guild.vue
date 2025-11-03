@@ -1,5 +1,5 @@
 <template>
-	<div class="pattern-checks-xl text-base-content/10 min-h-screen w-full">
+	<div class="">
 		<div class="mx-auto max-w-2xl py-24 max-md:px-4">
 			<div class="prose mb-8">
 				<NuxtLink to="/" class="text-base-content/75 mb-2 flex items-center gap-1 text-sm no-underline">
