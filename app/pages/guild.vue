@@ -97,7 +97,7 @@ const score = (level: number, prosperity_degree: number, money: number, member_c
 };
 
 const sorting = computed(() => {
-	return data.value?.ranking.sort((a, b) => {
+	return data.value?.ranking.sort((a: any, b: any) => {
 		return b.score - a.score;
 	});
 });
