@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="bg-base-100">
 		<Toaster />
 		<NuxtRouteAnnouncer />
 		<NuxtLoadingIndicator color="#F8BE82" />

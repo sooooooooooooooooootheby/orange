@@ -1,5 +1,5 @@
 <template>
-	<div class="pattern-dots-md text-base-content/10 h-auto w-full pt-28">
+	<div class="pattern-dots-md text-base-content/10 bg-base-100 h-auto w-full pt-28">
 		<div class="mx-auto flex min-h-screen max-w-4xl flex-col gap-20 text-gray-600 max-md:px-4">
 			<div class="flex flex-col items-center justify-center gap-12">
 				<div class="flex items-center gap-2">
@@ -43,8 +43,8 @@
 			<ContentRenderer v-if="data" :value="data" class="prose max-w-full" />
 
 			<div v-if="server">
-				<p class="mb-8 text-center text-2xl font-bold">服务器运行状态</p>
-				<div class="bg-base-100 rounded-lg border border-gray-200 p-6">
+				<p class="mb-8 text-center text-2xl font-bold text-base-content">服务器运行状态</p>
+				<div class="bg-base-100 rounded-lg border border-base-content/10 p-6">
 					<div class="mb-4 text-lg flex items-center gap-2">
 						<div class="bg-success size-2 rounded-full" :class="{ 'bg-error!': !server.online }"></div>
 						<span>游戏服务器</span>

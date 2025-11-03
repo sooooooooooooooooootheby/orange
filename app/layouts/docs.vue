@@ -7,7 +7,7 @@
 					<icon name="gravity-ui:layout-side-content" />
 				</label>
 			</div>
-			<div class="breadcrumbs text-sm">
+			<div class="breadcrumbs text-sm text-base-content">
 				<ul>
 					<li><icon name="gravity-ui:folder" class="mr-1.5" />home</li>
 					<li v-for="item in breadcrumbs">{{ item }}</li>
@@ -26,7 +26,7 @@
 					</div>
 					<button class="btn btn-sm" @click="navigateTo('/')"><icon name="gravity-ui:house" />回到首页</button>
 				</div>
-				<ul class="menu w-full grow">
+				<ul class="menu w-full grow text-base-content/75">
 					<li v-for="item in navigation?.[0]?.children" :key="item.title">
 						<details open v-if="item.children">
 							<summary>{{ item.title }}</summary>

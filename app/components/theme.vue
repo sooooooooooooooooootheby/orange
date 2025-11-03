@@ -1,5 +1,5 @@
 <template>
-	<div class="fixed top-2 right-2 z-100 scale-64">
+	<div class="fixed top-2 right-2 z-100 scale-64 text-base-content">
 		<label class="swap swap-rotate">
 			<!-- 绑定选中状态，并监听变化 -->
 			<input type="checkbox" class="theme-controller" :value="'dark'" :checked="isDark" @change="toggleTheme" />
