@@ -8,7 +8,6 @@
 			<h1 class="flex items-center gap-2"><icon name="gravity-ui:server" />服务器性能监控</h1>
 			<p>在这里, 你可以查看橙服所有服务器的运行状态</p>
 		</div>
-		<maps />
 		<ul class="flex flex-col gap-2">
 			<li>
 				<div class="card card-border bg-base-100/25 text-base-content shadow-xs backdrop-blur-md">
