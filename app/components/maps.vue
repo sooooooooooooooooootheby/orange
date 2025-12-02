@@ -27,6 +27,7 @@ const fetchMapData = async () => {
 };
 
 const scatterData = [
+	{ name: "枣庄 - 主服务器", value: [117.324, 34.811, 8] },
 	{ name: "宁波 - 主服务器", value: [121.549, 29.868, 10] },
 	{ name: "宿迁 - 子服务器", value: [118.275, 33.963, 8] },
 ];

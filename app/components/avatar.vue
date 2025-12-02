@@ -23,16 +23,16 @@ const props = defineProps({
 });
 
 const handleImageError = (event: any) => {
-	event.target.src = `https://orangecraftmc.top/head/3d/java/username/${props.fallback}`;
+	event.target.src = `https://mchead.s22y.moe/3d/java/username/${props.fallback}`;
 };
 
 const avatarUrl = (name: string) => {
 	if (name === "Rcon") {
-		return `https://orangecraftmc.top/head/3d/java/username/Console`;
+		return `https://mchead.s22y.moe/3d/java/username/Console`;
 	} else if (name.startsWith("zPE_")) {
-		return `https://orangecraftmc.top/head/3d/bedrock/username/${name.replace(/^zPE_/, "")}`;
+		return `https://mchead.s22y.moe/3d/bedrock/username/${name.replace(/^zPE_/, "")}`;
 	} else {
-		return `https://orangecraftmc.top/head/3d/java/username/${name}`;
+		return `https://mchead.s22y.moe/3d/java/username/${name}`;
 	}
 };
 </script>
