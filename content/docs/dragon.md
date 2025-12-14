@@ -4,7 +4,7 @@ description: 活动将于 待定 准时开启开启
 icon: gravity-ui:card-heart
 introduction: 橙服规格A级的大型活动！奖励多多～快来看看如何参加吧！
 isHide: false
-isHot: true
+isHot: false
 order: 4
 ---
 

@@ -37,10 +37,4 @@ B站视频直链：<https://www.bilibili.com/video/BV183CRB1Egw?vd_source=3e4044
 
 ## 服务器地址
 
-服务器Java地址：orangecraftmc.com
-
-服务器基岩版地址：orangecraftmc.com 端口号：45565
-
-生存服直连地址：survival.orangecraftmc.com
-
-如果需要用自动重连mod请使用生存服直连地址进入服务器，否则会重连进主城大厅哦\~
+在玩家1群的群公告内找到即可
