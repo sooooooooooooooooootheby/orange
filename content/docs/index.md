@@ -1,10 +1,10 @@
 ---
-icon: gravity-ui:heart
 title: 关于我们
+icon: gravity-ui:heart
 introduction: 关于我们, 是一个什么样的服务器?
-order: 0
 isHide: false
 isHot: false
+order: 0
 ---
 
 ![2025.8.17 服务器内测结束玩家大合影](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/guide/group_photo.png)
