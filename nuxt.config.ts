@@ -24,6 +24,7 @@ export default defineNuxtConfig({
 
 	runtimeConfig: {
 		databaseHost: process.env.DB_HOST,
+		databasePort: process.env.DB_PORT,
 		databaseUser: process.env.DB_USER,
 		databasePassword: process.env.DB_PASSWORD,
 		databaseDatabase: process.env.DB_NAME,
