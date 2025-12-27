@@ -34,7 +34,7 @@ export default defineNuxtConfig({
 	studio: {
 		repository: {
 			provider: "github",
-			owner: "sooooooooooooooooootheby",
+			owner: "meorionel",
 			repo: "orange",
 			branch: "main",
 		},
