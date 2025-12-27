@@ -21,7 +21,7 @@ isHot: false
 
 hud 会默认显示在左上角.
 
-![2](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/allmusic/1.webp)
+![2](/image/allmusic/1.webp)
 
 如果你也想点音乐, 可以输入 `/music <网易云音乐 ID/歌曲链接>` 点歌.
 
@@ -39,11 +39,11 @@ hud 会默认显示在左上角.
 
 不过腻不腻都无所谓, 现在你可以让你的武器, 物品文字变成彩色的了!
 
-![2](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/colortext/2.webp)
+![2](/image/colortext/2.webp)
 
 除此之外, 你还能让你的头衔, 名字, 分组, 公会名都变成彩色的!
 
-![3](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/colortext/3.webp)![4](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/colortext/4.webp)
+![3](/image/colortext/3.webp)![4](/image/colortext/4.webp)
 
 那么要怎么做的?
 
@@ -75,23 +75,23 @@ hud 会默认显示在左上角.
 
 **附魔金苹果**
 
-![合成1](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/curhc/1.webp)
+![合成1](/image/curhc/1.webp)
 
 **光源方块**
 
 光源方块从 `0~15` 级, 需要逐步一级一级升级, 无法直接合成高等级的光源方块.
 
-![合成2](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/curhc/2.webp)![合成3](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/curhc/3.webp)
+![合成2](/image/curhc/2.webp)![合成3](/image/curhc/3.webp)
 
 **隐形展示框**
 
-![合成4](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/curhc/4.webp)
+![合成4](/image/curhc/4.webp)
 
 **珊瑚块**
 
 四个珊瑚扇可以合成一个珊瑚块, 五种珊瑚扇都可以这么合成.
 
-![合成5](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/curhc/5.webp)
+![合成5](/image/curhc/5.webp)
 
 **去皮原木**
 
@@ -99,7 +99,7 @@ hud 会默认显示在左上角.
 
 当然, 和珊瑚块一样, 所有的原木都可以这么合成.
 
-![合成6](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/curhc/6.webp)
+![合成6](/image/curhc/6.webp)
 
 ## 魔法方块
 
@@ -107,7 +107,7 @@ hud 会默认显示在左上角.
 
 下面是魔法方块可用的方块.
 
-![魔法方块](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/playing/mb.webp)
+![魔法方块](/image/playing/mb.webp)
 
 ## 地图画
 
@@ -119,7 +119,7 @@ hud 会默认显示在左上角.
 
 等待一会你的手上就会出现一个地图画, 找一个物品展示框, 然后放上去就可以了.
 
-![am1](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/playing/am1.webp)
+![am1](/image/playing/am1.webp)
 
 ### 图床
 
@@ -146,5 +146,5 @@ hud 会默认显示在左上角.
 ::tip{type="info"}
 因为在游戏里, 一格就是`128px X 128px`, 所以如果你图片的分辨率不是128的倍数, 会导致边缘填不满一格, 出现透明白边, 影响观感
 
-![am2](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/playing/am2.webp)
+![am2](/image/playing/am2.webp)
 ::

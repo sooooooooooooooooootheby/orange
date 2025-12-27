@@ -13,7 +13,7 @@ isHot: false
 
 ## 菜单
 
-![1](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/play/1.webp)
+![1](/image/play/1.webp)
 
 通过指令 `/cd` 可以打开服务器菜单, 在这里你可以快速开启各种功能, 例如公会, 地标, 每日任务等.
 
@@ -33,7 +33,7 @@ isHot: false
 
 会员最大拥有的领地数量为20个, 圈地价格为 0.05 欧润吉一格方块
 
-![2](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/play/2.webp)
+![2](/image/play/2.webp)
 
 (图中是投影插件举例, 实际使用时请使用木锄头, 并且不会出现这么明显的选区)
 

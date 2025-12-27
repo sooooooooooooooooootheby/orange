@@ -1,13 +1,13 @@
 {
 	"bid": 1,
 	"image": [
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Mysterious_Pig_Spirit_Deal/1.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Mysterious_Pig_Spirit_Deal/2.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Mysterious_Pig_Spirit_Deal/3.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Mysterious_Pig_Spirit_Deal/4.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Mysterious_Pig_Spirit_Deal/5.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Mysterious_Pig_Spirit_Deal/6.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Mysterious_Pig_Spirit_Deal/7.webp"
+		"/image/blueMaps/Mysterious_Pig_Spirit_Deal/1.webp",
+		"/image/blueMaps/Mysterious_Pig_Spirit_Deal/2.webp",
+		"/image/blueMaps/Mysterious_Pig_Spirit_Deal/3.webp",
+		"/image/blueMaps/Mysterious_Pig_Spirit_Deal/4.webp",
+		"/image/blueMaps/Mysterious_Pig_Spirit_Deal/5.webp",
+		"/image/blueMaps/Mysterious_Pig_Spirit_Deal/6.webp",
+		"/image/blueMaps/Mysterious_Pig_Spirit_Deal/7.webp"
 	],
 	"authors": ["Meow_FVZ", "BOOGIEPOP"],
 	"warp": "神秘猪灵交易",

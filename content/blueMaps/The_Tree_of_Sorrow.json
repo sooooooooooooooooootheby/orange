@@ -1,9 +1,9 @@
 {
 	"bid": 4,
 	"image": [
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/The_Tree_of_Sorrow/3.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/The_Tree_of_Sorrow/1.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/The_Tree_of_Sorrow/2.webp"
+		"/image/blueMaps/The_Tree_of_Sorrow/3.webp",
+		"/image/blueMaps/The_Tree_of_Sorrow/1.webp",
+		"/image/blueMaps/The_Tree_of_Sorrow/2.webp"
 	],
 	"authors": ["xiao_kill", "356888"],
 	"warp": "红尘苦情树",

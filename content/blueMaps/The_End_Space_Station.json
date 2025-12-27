@@ -1,10 +1,10 @@
 {
 	"bid": 3,
 	"image": [
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/The_End_Space_Station/1.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/The_End_Space_Station/2.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/The_End_Space_Station/3.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/The_End_Space_Station/4.webp"
+		"/image/blueMaps/The_End_Space_Station/1.webp",
+		"/image/blueMaps/The_End_Space_Station/2.webp",
+		"/image/blueMaps/The_End_Space_Station/3.webp",
+		"/image/blueMaps/The_End_Space_Station/4.webp"
 	],
 	"authors": ["E_yiyi", "zPE_linzhuzhu648", "535445863jul", "Ongminnie", "zPE_windous8738", "zPE_SrabCap"],
 	"warp": "夜梦阁末地空间站",

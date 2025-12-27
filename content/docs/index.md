@@ -7,7 +7,7 @@ isHide: false
 isHot: false
 ---
 
-![2025.8.17 服务器内测结束玩家大合影](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/guide/group_photo.png)
+![2025.8.17 服务器内测结束玩家大合影](/image/guide/group_photo.png)
 
 2025.8.17 服务器内测结束玩家大合影
 
@@ -55,4 +55,4 @@ isHot: false
 - 主板: 华硕 Prime X670-P
 - 带宽: 150Mbps（限速200Mbps） 国家 BGP 骨干网
 
-![资源管理器](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/guide/zyglq.png)
+![资源管理器](/image/guide/zyglq.png)

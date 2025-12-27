@@ -1,8 +1,8 @@
 {
 	"bid": 2,
 	"image": [
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Monument_to_the_People%27s_Heroes/1.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Monument_to_the_People%27s_Heroes/2.webp"
+		"/image/blueMaps/Monument_to_the_People%27s_Heroes/1.webp",
+		"/image/blueMaps/Monument_to_the_People%27s_Heroes/2.webp"
 	],
 	"authors": ["Windous", "zPE_Windous8738"],
 	"title": "人民英雄纪念碑",

@@ -25,11 +25,11 @@ order: 0
 
 玩家在首次加入服务器之后,需要绑定验证码。
 
-![2](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/join/2.png)
+![2](/image/join/2.png)
 
 此时你只需要在交流群中在验证码前加一个绑定并发送就可以进入服务器游戏了
 
-![3](https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/join/3.png)
+![3](/image/join/3.png)
 
 ## 加入服务器的视频教程
 

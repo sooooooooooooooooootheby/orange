@@ -1,9 +1,9 @@
 {
 	"bid": 5,
 	"image": [
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Saturn_V_launch_vehicle/1.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Saturn_V_launch_vehicle/2.webp",
-		"https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/blueMaps/Saturn_V_launch_vehicle/3.webp"
+		"/image/blueMaps/Saturn_V_launch_vehicle/1.webp",
+		"/image/blueMaps/Saturn_V_launch_vehicle/2.webp",
+		"/image/blueMaps/Saturn_V_launch_vehicle/3.webp"
 	],
 	"authors": ["zPE_HINinety3894", "putaou"],
 	"title": "土星五号运载火箭",

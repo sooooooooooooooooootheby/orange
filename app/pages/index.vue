@@ -35,7 +35,7 @@
 			<div class="stack">
 				<div class="card bg-base-200 text-center shadow-md">
 					<div class="card-body p-0">
-						<img src="https://orangecraftmc.obs.cn-south-1.myhuaweicloud.com/bg.webp" alt="cover" class="zoom rounded-lg" />
+						<img src="/image/bg.webp" alt="cover" class="zoom rounded-lg" />
 					</div>
 				</div>
 				<div class="card bg-base-200 text-center shadow">
